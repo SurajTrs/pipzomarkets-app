@@ -4,8 +4,10 @@ import React from 'react';
 import { Container, Row, Col, Button, Card, ListGroup, Nav, Tab } from 'react-bootstrap';
 import WhyChooseUs from '../../components/WhyChooseUs';
 import RecentCoursesSlider from './RecentCoursesSlider';
+import ForexChaptersGrid from '../../components/ForexChaptersGrid';
 
 const ForexTradingCoursesPage: React.FC = () => {
+  
   return (
     <div className="bg-dark text-light py-4">
       <Container>
@@ -51,7 +53,7 @@ const ForexTradingCoursesPage: React.FC = () => {
             </Card>
           </Col>
         </Row>
-
+<ForexChaptersGrid/>
         <Card className="text-dark mb-4">
           <Card.Body>
             <Tab.Container defaultActiveKey="description">
