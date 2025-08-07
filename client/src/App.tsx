@@ -81,7 +81,12 @@ import MarketTerms from "./pages/Education/Trading Platforms Tutorials/MarketTer
 import LiveTradingWebinars from "./pages/Education/Webinars/LiveTradingWebinars";
 import TradingRules from "./pages/Education/Webinars/TradingRules";
 import Blog from "./pages/Education/Webinars/Blog";
-
+import WhyChoosePipzomarket from "./pages/About/WhyChoosePipzomarket";
+import Resistration from "./components/register";
+import About from "./components/about";
+import RegulationTrustPage from "./pages/About/RegulationTrustPage";
+import LeadershipTeam from "./pages/About/LeadershipTeam";
+import DepositsWithdrawals from "./pages/About/DepositsWithdrawals";
 
 
 const App: React.FC = () => {
@@ -172,6 +177,12 @@ const App: React.FC = () => {
 
           <Route path="/TradingRules" element={<TradingRules />} />
           <Route path="/Blog" element={<Blog />} />
+          <Route path="/register" element={<Resistration />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/WhyChoosePipzomarket" element={<WhyChoosePipzomarket />} />
+          <Route path="/RegulationTrustPage" element={<RegulationTrustPage />} />
+          <Route path="/LeadershipTeam" element={<LeadershipTeam />} />
+          <Route path="/DepositsWithdrawals" element={<DepositsWithdrawals />} />
           
              </Routes>
       </main>

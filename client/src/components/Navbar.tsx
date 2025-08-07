@@ -724,7 +724,7 @@ useEffect(() => {
               <li className="nav-item dropdown hover-dropdown position-static">
                 <a
                   className="nav-link dropdown-toggle text-dark fw-semibold"
-                  href="#"
+                  href="/about"
                   role="button"
                   data-bs-toggle="dropdown"
                   aria-expanded="false"
@@ -737,58 +737,45 @@ useEffect(() => {
                 >
                   <div className="row g-4">
                     <div className="col-md-4">
+                     
+                      
                       <a className="dropdown-item fw-semibold" href="#">
-                        Football Sponsorship – UAE Pro League
+                        PipzoMarkets Reviews
                       </a>
-                      <a className="dropdown-item fw-semibold" href="#">
-                        F1 Sponsorship – Red Bull Racing
+                      <a className="dropdown-item fw-semibold" href="WhyChoosePipzomarket">
+                        Why PipzoMarkets?
                       </a>
-                      <a className="dropdown-item fw-semibold" href="#">
-                        AvaTrade Reviews
-                      </a>
-                      <a className="dropdown-item fw-semibold" href="#">
-                        Why AvaTrade?
-                      </a>
-                      <a className="dropdown-item fw-semibold" href="#">
+                      <a className="dropdown-item fw-semibold" href="RegulationTrustPage">
                         Regulation
                       </a>
-                      <a className="dropdown-item fw-semibold" href="#">
-                        Accessibility
-                      </a>
-                      <a className="dropdown-item fw-semibold" href="#">
+
+                      <a className="dropdown-item fw-semibold" href="LeadershipTeam">
                         Management
                       </a>
                     </div>
+                  
                     <div className="col-md-4">
+                         <a className="dropdown-item fw-semibold" href="/about">
+                        About
+                      </a>
                       <a className="dropdown-item fw-semibold" href="#">
                         Contact Us
                       </a>
-                      <a className="dropdown-item fw-semibold" href="#">
+                      <a className="dropdown-item fw-semibold" href="DepositsWithdrawals">
                         Withdrawals and Deposits
                       </a>
-                      <a className="dropdown-item fw-semibold" href="#">
-                        Refer a Friend
-                      </a>
+                    
                     </div>
                     <div className="col-md-4">
                       <a className="dropdown-item fw-semibold" href="#">
                         Legal Documents
                       </a>
-                      <a className="dropdown-item fw-semibold" href="#">
-                        Awards
-                      </a>
-                      <a className="dropdown-item fw-semibold" href="#">
-                        New Accounts Pack
-                      </a>
-                      <a className="dropdown-item fw-semibold" href="#">
-                        AvaTrade VIP
-                      </a>
+                    
+                   
                       <a className="dropdown-item fw-semibold" href="#">
                         Interest Rates
                       </a>
-                      <a className="dropdown-item fw-semibold" href="#">
-                        Trading Websites
-                      </a>
+                     
                     </div>
                   </div>
                 </div>
