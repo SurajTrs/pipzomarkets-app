@@ -7,6 +7,50 @@ body,
   padding: 0;
 }
 
+/* Authentication Styles */
+.login-background {
+  background: linear-gradient(135deg, #0f6519 0%, #0e2d3c 100%);
+  min-height: 100vh;
+}
+
+.login-card {
+  background-color: rgba(14, 45, 60, 0.8);
+  max-width: 400px;
+  width: 90%;
+}
+
+/* Dashboard Styles */
+.sidebar .nav-link {
+  color: #0e2d3c;
+  border-radius: 0.5rem;
+  padding: 0.75rem 1rem;
+  margin-bottom: 0.25rem;
+  transition: all 0.2s ease;
+}
+
+.sidebar .nav-link:hover {
+  background-color: rgba(15, 101, 25, 0.1);
+}
+
+.sidebar .nav-link.active {
+  background-color: #0f6519;
+  color: white;
+}
+
+.avatar-circle {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bg-accent {
+  background-color: #0f6519 !important;
+}
+
 .table,
 .table-bordered,
 .table-light,

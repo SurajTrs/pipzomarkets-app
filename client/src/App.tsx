@@ -1,5 +1,8 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { AuthProvider } from "./context/AuthContext";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import NavBar from "./components/Navbar";
 import BottomTicker from "./components/BottomTicker";
 import HomePage from "./pages/HomePage";
@@ -50,6 +53,8 @@ import Bitcoin from "./pages/Bitcoin/Bitcoin";
 import HowBitcoin from "./pages/Bitcoin/HowBitcoin";
 import BitcoinETF from "./pages/Bitcoin/BitcoinETF";
 import Login from "./components/login";
+import UserDashboard from "./components/UserDashboard";
+import ProtectedRoute from "./components/ProtectedRoute";
 import Footer from "./components/Footer";
 import ForexTradingCoursesPage from "./pages/Academy/ForexTradingCoursesPage";
 import StockTradingCoursesPage from "./pages/Academy/StockTradingCoursesPage";
@@ -82,7 +87,7 @@ import LiveTradingWebinars from "./pages/Education/Webinars/LiveTradingWebinars"
 import TradingRules from "./pages/Education/Webinars/TradingRules";
 import Blog from "./pages/Education/Webinars/Blog";
 import WhyChoosePipzomarket from "./pages/About/WhyChoosePipzomarket";
-import Resistration from "./components/register";
+import Registration from "./components/register";
 import About from "./components/about";
 import RegulationTrustPage from "./pages/About/RegulationTrustPage";
 import LeadershipTeam from "./pages/About/LeadershipTeam";
@@ -91,12 +96,20 @@ import DepositsWithdrawals from "./pages/About/DepositsWithdrawals";
 
 const App: React.FC = () => {
   return (
-    <Router>
-       <NavBar />
-    <div id="app-root">
-      <main className="page-content">
-        <Routes>
-          <Route path="/" element={<HomePage />} />
+    <AuthProvider>
+      <Router>
+        <NavBar />
+        <div id="app-root">
+          <main className="page-content">
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Registration />} />
+              <Route path="/dashboard" element={
+                <ProtectedRoute>
+                  <UserDashboard />
+                </ProtectedRoute>
+              } />
           <Route path="/WhatIsForex" element={<WhatIsForex />} />
           <Route path="/HowToTradeForex" element={<HowToTradeForex />} />
           <Route path="/VanillaOptions" element={<VanillaOptions />} />
@@ -177,7 +190,7 @@ const App: React.FC = () => {
 
           <Route path="/TradingRules" element={<TradingRules />} />
           <Route path="/Blog" element={<Blog />} />
-          <Route path="/register" element={<Resistration />} />
+          <Route path="/register" element={<Registration />} />
           <Route path="/about" element={<About />} />
           <Route path="/WhyChoosePipzomarket" element={<WhyChoosePipzomarket />} />
           <Route path="/RegulationTrustPage" element={<RegulationTrustPage />} />
@@ -189,8 +202,20 @@ const App: React.FC = () => {
       <Footer/>
       <BottomTicker />
     </div>
+    <ToastContainer 
+      position="top-right"
+      autoClose={5000}
+      hideProgressBar={false}
+      newestOnTop
+      closeOnClick
+      rtl={false}
+      pauseOnFocusLoss
+      draggable
+      pauseOnHover
+      theme="light"
+    />
   </Router>
-  
+  </AuthProvider>
   );
 };
 

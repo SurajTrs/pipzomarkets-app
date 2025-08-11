@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import LOGOPIP from '../assets/LOGOPIP.png'; 
 import '../style.css';
+import { useAuth } from '../context/useAuth';
 
 const Navbar: React.FC = () => {
+  const { isAuthenticated, logout } = useAuth();
   const [isAnyDropdownOpen, setIsAnyDropdownOpen] = useState(false);
 useEffect(() => {
   if (window.innerWidth < 992) return; // Skip hover logic on mobile
@@ -789,17 +792,33 @@ useEffect(() => {
             </ul>
 
             <div className="d-flex align-items-center gap-3">
-              <a href="login" className="text-decoration-none text-dark fw-semibold">
-                Login
-              </a>
-             <a
-         href="register"
-  className="btn text-white px-3"
-  style={{ backgroundColor: '#198754' }}
->
-  Register Now
-</a>
-
+              {isAuthenticated ? (
+                <>
+                  <Link to="/dashboard" className="text-decoration-none text-dark fw-semibold">
+                    Dashboard
+                  </Link>
+                  <button
+                    onClick={logout}
+                    className="btn text-white px-3"
+                    style={{ backgroundColor: '#198754' }}
+                  >
+                    Logout
+                  </button>
+                </>
+              ) : (
+                <>
+                  <Link to="/login" className="text-decoration-none text-dark fw-semibold">
+                    Login
+                  </Link>
+                  <Link
+                    to="/register"
+                    className="btn text-white px-3"
+                    style={{ backgroundColor: '#198754' }}
+                  >
+                    Register Now
+                  </Link>
+                </>
+              )}
             </div>
           </div>
         </div>
