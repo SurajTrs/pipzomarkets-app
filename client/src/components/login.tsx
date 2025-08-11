@@ -82,7 +82,7 @@ const Login: React.FC = () => {
               <Link to="/register" className="text-info">Create Account</Link>
             </small>
             <small className="text-white">
-              <a href="#" className="text-info">Forgot Password?</a>
+              <Link to="/forgot-password" className="text-info">Forgot Password?</Link>
             </small>
           </div>
         </form>

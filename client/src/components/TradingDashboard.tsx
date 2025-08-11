@@ -6,8 +6,43 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { AdvancedChart } from 'react-tradingview-embed';
 
+// Define interface for useAuth return value (adjust based on your actual useAuth implementation)
+interface AuthContextType {
+  user: { id: string; name: string } | null; // Example, adjust as needed
+  isAuthenticated: boolean;
+}
+
+// NumberInput component (from previous context)
+interface NumberInputProps {
+  amount: number;
+  setAmount: (value: number) => void;
+}
+
+const NumberInput: React.FC<NumberInputProps> = ({ amount, setAmount }) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = Number(e.target.value);
+    if (!isNaN(value)) {
+      setAmount(value);
+    }
+  };
+
+  return (
+    <input
+      type="number"
+      className="form-control bg-dark text-white border-secondary"
+      value={amount}
+      onChange={handleChange}
+      min="1"
+      step="1"
+      required
+      id="amount-input"
+      aria-label="Amount in dollars"
+    />
+  );
+};
+
 const TradingDashboard: React.FC = () => {
-  const [selectedCategory, setSelectedCategory] = useState("Most Popular");
+  const [selectedCategory, setSelectedCategory] = useState<string>("Most Popular");
   const [selectedInstrument, setSelectedInstrument] = useState<string | null>(null);
   const [orderType, setOrderType] = useState<'buy' | 'sell'>('buy');
   const [amount, setAmount] = useState<number>(100);
@@ -18,7 +53,7 @@ const TradingDashboard: React.FC = () => {
   const [lastUpdated, setLastUpdated] = useState<Date>(new Date());
   const leftBoxRef = useRef<HTMLDivElement>(null);
   const [, setLeftHeight] = useState<number | undefined>(undefined);
-  useAuth();
+  const { isAuthenticated } = useAuth() as AuthContextType; // Type the useAuth return value
 
   useEffect(() => {
     if (leftBoxRef.current) {
@@ -27,11 +62,9 @@ const TradingDashboard: React.FC = () => {
   }, [selectedCategory]);
 
   useEffect(() => {
-    // Set up interval to refresh rates
     const intervalId = setInterval(() => {
-      // In a real implementation, you would fetch updated rates here
       setLastUpdated(new Date());
-    }, 5000); // Update every 5 seconds
+    }, 5000);
 
     return () => clearInterval(intervalId);
   }, []);
@@ -54,10 +87,14 @@ const TradingDashboard: React.FC = () => {
       { name: "MICROSOFT", sell: "492.12", buy: "492.78", change: "+0.47%" },
       { name: "PFIZER", sell: "24.24", buy: "24.33", change: "-0.08%" },
     ],
-    // ... existing instrument categories
   };
 
   const handleTrade = async () => {
+    if (!isAuthenticated) {
+      toast.error("Please log in to place a trade");
+      return;
+    }
+
     if (!selectedInstrument) {
       toast.error("Please select an instrument");
       return;
@@ -70,26 +107,21 @@ const TradingDashboard: React.FC = () => {
 
     try {
       setIsLoading(true);
-      
-      // Get current price based on order type
-      const instrument = allInstruments[selectedCategory].find(i => i.name === selectedInstrument);
+      const instrument = allInstruments[selectedCategory]?.find(i => i.name === selectedInstrument);
       if (!instrument) {
         toast.error("Instrument not found");
         return;
       }
-      
+
       const price = orderType === 'buy' ? parseFloat(instrument.buy) : parseFloat(instrument.sell);
       
-      // In a real implementation, you would call your API here
-      // For demo purposes, we'll simulate a successful trade
-      setTimeout(() => {
-        toast.success(`${orderType.toUpperCase()} order placed for ${selectedInstrument} at ${price}`);
-        setIsLoading(false);
-      }, 1000);
-      
+      // Simulate API call
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      toast.success(`${orderType.toUpperCase()} order placed for ${selectedInstrument} at ${price}`);
     } catch (error) {
       console.error('Trade error:', error);
       toast.error("Failed to place trade");
+    } finally {
       setIsLoading(false);
     }
   };
@@ -118,19 +150,17 @@ const TradingDashboard: React.FC = () => {
             <input
               className="form-control mb-3 bg-transparent text-white border-secondary"
               placeholder="🔍 Search instruments"
+              aria-label="Search instruments"
             />
             {categories.map((cat, idx) => (
               <button
                 key={idx}
                 onClick={() => setSelectedCategory(cat)}
                 className={`w-100 mb-2 text-start px-3 py-2 rounded-3 fw-semibold ${
-                  selectedCategory === cat
-                    ? "bg-accent text-white"
-                    : "text-light"
+                  selectedCategory === cat ? "bg-accent text-white" : "text-light"
                 }`}
                 style={{
-                  backgroundColor:
-                    selectedCategory === cat ? "#00BFA6" : "rgba(255,255,255,0.08)",
+                  backgroundColor: selectedCategory === cat ? "#00BFA6" : "rgba(255,255,255,0.08)",
                   border: "none",
                 }}
               >
@@ -145,7 +175,7 @@ const TradingDashboard: React.FC = () => {
             <h4 className="m-0">Market Watch</h4>
             <small className="text-muted">Last updated: {lastUpdated.toLocaleTimeString()}</small>
           </div>
-          
+
           <div
             className="rounded-4 shadow-lg overflow-hidden mb-4"
             style={{
@@ -157,11 +187,11 @@ const TradingDashboard: React.FC = () => {
             <table className="table text-white m-0">
               <thead style={{ backgroundColor: "rgba(255,255,255,0.08)" }}>
                 <tr>
-                  <th>Instrument</th>
-                  <th>Sell</th>
-                  <th>Buy</th>
-                  <th>Change</th>
-                  <th>Action</th>
+                  <th scope="col">Instrument</th>
+                  <th scope="col">Sell</th>
+                  <th scope="col">Buy</th>
+                  <th scope="col">Change</th>
+                  <th scope="col">Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -201,6 +231,7 @@ const TradingDashboard: React.FC = () => {
                           setSelectedInstrument(item.name);
                           setOrderType('buy');
                         }}
+                        aria-label={`Buy ${item.name}`}
                       >
                         Buy
                       </button>
@@ -211,16 +242,21 @@ const TradingDashboard: React.FC = () => {
                           setSelectedInstrument(item.name);
                           setOrderType('sell');
                         }}
+                        aria-label={`Sell ${item.name}`}
                       >
                         Sell
                       </button>
                     </td>
                   </tr>
-                ))}
+                )) || (
+                  <tr>
+                    <td colSpan={5} className="text-center">No instruments available</td>
+                  </tr>
+                )}
               </tbody>
             </table>
           </div>
-          
+
           {selectedInstrument && (
             <div className="row">
               <div className="col-md-8">
@@ -248,7 +284,7 @@ const TradingDashboard: React.FC = () => {
                   />
                 </div>
               </div>
-              
+
               <div className="col-md-4">
                 <div 
                   className="rounded-4 p-3" 
@@ -258,41 +294,39 @@ const TradingDashboard: React.FC = () => {
                   }}
                 >
                   <h5 className="mb-3">Place Order: {selectedInstrument}</h5>
-                  
+
                   <div className="mb-3">
                     <div className="btn-group w-100">
                       <button 
                         className={`btn ${orderType === 'buy' ? 'btn-success' : 'btn-outline-success'}`}
                         onClick={() => setOrderType('buy')}
+                        aria-label="Select Buy Order"
                       >
                         Buy
                       </button>
                       <button 
                         className={`btn ${orderType === 'sell' ? 'btn-danger' : 'btn-outline-danger'}`}
                         onClick={() => setOrderType('sell')}
+                        aria-label="Select Sell Order"
                       >
                         Sell
                       </button>
                     </div>
                   </div>
-                  
+
                   <div className="mb-3">
-                    <label className="form-label">Amount ($)</label>
-                    <input
-                      type="number" 
-                      className="form-control bg-dark text-white border-secondary" 
-                      value={amount}
-                      onChange={(e) => setAmount(Number(e.target.value))}
-                      min="1"
-                    />
+                    <label htmlFor="amount-input" className="form-label">Amount ($)</label>
+                    <NumberInput amount={amount} setAmount={setAmount} />
                   </div>
-                  
+
                   <div className="mb-3">
-                    <label className="form-label">Leverage</label>
+                    <label htmlFor="leverage-select" className="form-label">Leverage</label>
                     <select 
+                      id="leverage-select"
                       className="form-select bg-dark text-white border-secondary"
                       value={leverage}
                       onChange={(e) => setLeverage(Number(e.target.value))}
+                      aria-label="Select leverage"
                     >
                       <option value="1">1:1</option>
                       <option value="2">1:2</option>
@@ -303,33 +337,40 @@ const TradingDashboard: React.FC = () => {
                       <option value="100">1:100</option>
                     </select>
                   </div>
-                  
+
                   <div className="mb-3">
-                    <label className="form-label">Stop Loss (optional)</label>
+                    <label htmlFor="stop-loss-input" className="form-label">Stop Loss (optional)</label>
                     <input 
                       type="number" 
+                      id="stop-loss-input"
                       className="form-control bg-dark text-white border-secondary" 
-                      value={stopLoss || ''}
+                      value={stopLoss ?? ''}
                       onChange={(e) => setStopLoss(e.target.value ? Number(e.target.value) : null)}
                       placeholder="Enter price"
+                      step="0.01"
+                      aria-label="Stop Loss"
                     />
                   </div>
-                  
+
                   <div className="mb-3">
-                    <label className="form-label">Take Profit (optional)</label>
+                    <label htmlFor="take-profit-input" className="form-label">Take Profit (optional)</label>
                     <input 
                       type="number" 
+                      id="take-profit-input"
                       className="form-control bg-dark text-white border-secondary" 
-                      value={takeProfit || ''}
+                      value={takeProfit ?? ''}
                       onChange={(e) => setTakeProfit(e.target.value ? Number(e.target.value) : null)}
                       placeholder="Enter price"
+                      step="0.01"
+                      aria-label="Take Profit"
                     />
                   </div>
-                  
+
                   <button 
                     className={`btn btn-${orderType === 'buy' ? 'success' : 'danger'} w-100`}
                     onClick={handleTrade}
                     disabled={isLoading}
+                    aria-label={`Place ${orderType} order for ${selectedInstrument}`}
                   >
                     {isLoading ? (
                       <span>

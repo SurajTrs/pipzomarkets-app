@@ -317,80 +317,8 @@ app.put('/api/trades/:id/close', auth, async (req, res) => {
   }
 });
 
-// Forgot Password endpoint
-app.post('/api/forgot-password', async (req, res) => {
-  try {
-    const { email } = req.body;
-    
-    if (!email) {
-      return res.status(400).json({ message: 'Email is required' });
-    }
-    
-    // Find user by email
-    const user = await User.findOne({ email });
-    if (!user) {
-      // For security reasons, don't reveal that the user doesn't exist
-      return res.status(200).json({ message: 'If your email is registered, you will receive a password reset link' });
-    }
-    
-    // Generate reset token
-    const resetToken = jwt.sign(
-      { userId: user._id },
-      process.env.JWT_SECRET || 'your_jwt_secret',
-      { expiresIn: '1h' }
-    );
-    
-    // In a real application, you would send an email with the reset link
-    // For this demo, we'll just return the token
-    console.log(`Reset token for ${email}: ${resetToken}`);
-    
-    res.status(200).json({ 
-      message: 'If your email is registered, you will receive a password reset link',
-      // In a real app, you wouldn't return the token in the response
-      // This is just for demonstration purposes
-      resetToken 
-    });
-  } catch (error) {
-    console.error('Forgot password error:', error);
-    res.status(500).json({ message: 'Server error' });
-  }
-});
-
-// Reset Password endpoint
-app.post('/api/reset-password', async (req, res) => {
-  try {
-    const { token, password } = req.body;
-    
-    if (!token || !password) {
-      return res.status(400).json({ message: 'Token and password are required' });
-    }
-    
-    // Verify token
-    let decoded;
-    try {
-      decoded = jwt.verify(token, process.env.JWT_SECRET || 'your_jwt_secret');
-    } catch (err) {
-      return res.status(400).json({ message: 'Invalid or expired token' });
-    }
-    
-    // Find user
-    const user = await User.findById(decoded.userId);
-    if (!user) {
-      return res.status(404).json({ message: 'User not found' });
-    }
-    
-    // Hash new password
-    const salt = await bcrypt.genSalt(10);
-    user.password = await bcrypt.hash(password, salt);
-    
-    await user.save();
-    
-    res.status(200).json({ message: 'Password has been reset successfully' });
-  } catch (error) {
-    console.error('Reset password error:', error);
-    res.status(500).json({ message: 'Server error' });
-  }
-});
+// Setup market data service
+const io = setupMarketDataService(app);
 
 // Start server
 const PORT = process.env.PORT || 5000;

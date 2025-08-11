@@ -6,6 +6,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import NavBar from "./components/Navbar";
 import BottomTicker from "./components/BottomTicker";
 import HomePage from "./pages/HomePage";
+import ForgotPassword from "./components/ForgotPassword";
+import ResetPassword from "./components/ResetPassword";
 import WhatIsForex from "./pages/Products/Forex Trading/WhatIsForex";
 import HowToTradeForex from "./pages/Products/Forex Trading/HowToTradeForex";
 import VanillaOptions from "./pages/Products/Forex Trading/VanillaOptions";
@@ -105,6 +107,8 @@ const App: React.FC = () => {
               <Route path="/" element={<HomePage />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Registration />} />
+              <Route path="/forgot-password" element={<ForgotPassword />} />
+              <Route path="/reset-password" element={<ResetPassword />} />
               <Route path="/dashboard" element={
                 <ProtectedRoute>
                   <UserDashboard />
