@@ -1,16 +1,50 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const cors = require('cors');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const cors = require('cors');
+const nodemailer = require('nodemailer');
 require('dotenv').config();
 const { setupMarketDataService } = require('./marketDataService');
+const { createOrdersRouter } = require('./routes/orders');
+const { createPaymentsRouter } = require('./routes/payments');
+const { verifyWebhook } = require('./payments/stripe');
+const { openPricingStream } = require('./brokers/oandaPricing');
 
 // Initialize Express app
 const app = express();
 
 // Middleware
 app.use(cors());
+
+// Stripe webhook endpoint must receive the raw body to validate signature.
+// IMPORTANT: This route MUST be defined BEFORE express.json().
+app.post('/api/webhooks/stripe', express.raw({ type: 'application/json' }), async (req, res) => {
+  try {
+    const event = verifyWebhook(req);
+
+    if (event.type === 'payment_intent.succeeded') {
+      const intent = event.data.object;
+      const userId = intent.metadata?.userId;
+      const amountReceived = intent.amount_received; // in smallest currency unit (e.g., cents)
+      if (userId && amountReceived) {
+        try {
+          // Credit user's platform balance (converting cents->dollars)
+          await User.findByIdAndUpdate(userId, { $inc: { balance: amountReceived / 100 } });
+        } catch (dbErr) {
+          console.error('Stripe webhook DB update error:', dbErr);
+        }
+      }
+    }
+
+    res.json({ received: true });
+  } catch (err) {
+    console.error('Stripe webhook error:', err?.message || err);
+    return res.status(400).send(`Webhook Error: ${err.message || 'invalid payload'}`);
+  }
+});
+
+// Parse JSON for all other routes
 app.use(express.json());
 
 // Connect to MongoDB
@@ -340,9 +374,50 @@ app.post('/api/forgot-password', async (req, res) => {
       { expiresIn: '1h' }
     );
     
-    // In a real application, you would send an email with the reset link
-    // For this demo, we'll just return the token
-    console.log(`Reset token for ${email}: ${resetToken}`);
+        // Create a transporter for sending emails
+    // Note: For production, you should set these values in your .env file
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',  // or another email service
+      auth: {
+        user: process.env.EMAIL_USER || 'your-email@gmail.com', // replace with your email in .env
+        pass: process.env.EMAIL_APP_PASSWORD || 'your-app-password' // use app password for Gmail
+      }
+    });
+    
+    // Create the reset URL with the token
+    const clientURL = process.env.CLIENT_URL || 'http://localhost:5174';
+    const resetUrl = `${clientURL}/reset-password?token=${resetToken}`;
+    
+    // Email content
+    const mailOptions = {
+      from: process.env.EMAIL_USER || 'your-email@gmail.com',
+      to: email,
+      subject: 'PipzoMarkets - Password Reset Request',
+      html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e0e0e0; border-radius: 5px;">
+          <h1 style="color: #198754;">Password Reset</h1>
+          <p>You requested a password reset for your PipzoMarkets account. Click the button below to reset your password:</p>
+          <div style="text-align: center; margin: 30px 0;">
+            <a href="${resetUrl}" style="background-color: #198754; color: white; padding: 12px 24px; text-decoration: none; border-radius: 4px; font-weight: bold;">Reset Password</a>
+          </div>
+          <p>This link will expire in 1 hour.</p>
+          <p>If you did not request this reset, please ignore this email and your password will remain unchanged.</p>
+          <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 20px 0;">
+          <p style="color: #666; font-size: 12px;">PipzoMarkets - Trading Platform</p>
+        </div>
+      `
+    };
+    
+    try {
+      // Send the email
+      await transporter.sendMail(mailOptions);
+      console.log(`Password reset email sent to ${email}`);
+    } catch (emailError) {
+      // If email sending fails, log the error but don't expose it to the client
+      console.error('Email sending error:', emailError);
+      // Still log the token for testing purposes
+      console.log(`Reset token for ${email}: ${resetToken}`);
+    }
     
     res.status(200).json({ 
       message: 'If your email is registered, you will receive a password reset link',
@@ -390,6 +465,56 @@ app.post('/api/reset-password', async (req, res) => {
     console.error('Reset password error:', error);
     res.status(500).json({ message: 'Server error' });
   }
+});
+
+// Mount real trading (OANDA) and payments (Stripe) routes
+app.use('/api', createOrdersRouter(auth));
+app.use('/api', createPaymentsRouter(auth));
+
+// Live/practice pricing stream via OANDA (SSE)
+// Usage: GET /api/prices/stream?instruments=EUR_USD,GBP_USD
+app.get('/api/prices/stream', (req, res) => {
+  // Auth via query param token because EventSource cannot set headers
+  const token = (req.query.token || '').toString();
+  try {
+    if (!token) return res.status(401).end();
+    jwt.verify(token, process.env.JWT_SECRET);
+  } catch {
+    return res.status(401).end();
+  }
+  const instrumentsParam = (req.query.instruments || 'EUR_USD').toString();
+  const instruments = instrumentsParam.split(',').map(s => s.trim()).filter(Boolean);
+  const { OANDA_API_KEY, OANDA_ACCOUNT_ID, OANDA_ENV } = process.env;
+
+  if (!OANDA_API_KEY || !OANDA_ACCOUNT_ID) {
+    return res.status(500).json({ message: 'Broker not configured' });
+  }
+
+  // SSE headers
+  res.setHeader('Content-Type', 'text/event-stream');
+  res.setHeader('Cache-Control', 'no-cache');
+  res.setHeader('Connection', 'keep-alive');
+  res.flushHeaders && res.flushHeaders();
+
+  const close = openPricingStream({
+    apiKey: OANDA_API_KEY,
+    accountId: OANDA_ACCOUNT_ID,
+    instruments,
+    environment: OANDA_ENV || 'practice',
+    onData: (msg) => {
+      // Forward pricing and heartbeat messages to client
+      res.write(`data: ${JSON.stringify(msg)}\n\n`);
+    },
+    onError: (err) => {
+      console.error('Pricing stream error:', err?.message || err);
+      try { res.write(`event: error\ndata: ${JSON.stringify({ message: 'stream_error' })}\n\n`); } catch {}
+      try { res.end(); } catch {}
+    }
+  });
+
+  req.on('close', () => {
+    try { close && close(); } catch {}
+  });
 });
 
 // Start server

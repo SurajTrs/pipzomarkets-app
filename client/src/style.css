@@ -848,3 +848,32 @@ table {
   overflow-y: auto;
 }
 
+.ticker-wrapper {
+  width: 100%;
+  overflow: hidden;
+}
+
+.ticker {
+  display: inline-flex;
+  white-space: nowrap;
+}
+
+.ticker span {
+  flex: 0 0 auto;
+  font-size: 0.75rem; /* Small, icon-like text size */
+  line-height: 1.5;
+}
+
+@keyframes scrollTicker {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%); /* Move to the left by half the content width */
+  }
+}
+
+/* Prevent animation pause on hover */
+.ticker:hover {
+  animation-play-state: running;
+}

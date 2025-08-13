@@ -1,32 +1,35 @@
+
 import React from 'react';
 import { Container, Row, Col, Card } from 'react-bootstrap';
+// Import images (replace with actual image paths if different)
+import AwardMobile from '../assets/images/award-mobile.png';
+import AwardBroker from '../assets/images/award-trusted.png';
+import AwardTrusted from '../assets/images/award-broker.png';
 
 const Awards: React.FC = () => {
   const awards = [
     {
-      title: "Best Mobile Trading Platform 2024",
-      image: "/images/award-mobile.png",
+      title: 'Best Mobile Trading Platform 2025',
+      image: AwardMobile,
     },
     {
-      title: "Top Broker of the Year",
-      image: "/images/award-broker.png",
+      title: 'Top Broker of the Year',
+      image: AwardBroker,
     },
     {
-      title: "Most Trusted Platform",
-      image: "/images/award-trusted.png",
+      title: 'Most Trusted Platform',
+      image: AwardTrusted,
     },
   ];
 
   return (
     <section className="awards-section py-5 text-light">
       <Container>
-        <h2 className="text-center fw-bold mb-5 ">
-          Our Achievements
-        </h2>
+        <h2 className="text-center fw-bold mb-5">Our Achievements</h2>
         <Row className="g-4 justify-content-center">
           {awards.map((award, index) => (
             <Col md={4} sm={6} key={index}>
-              <Card className="award-card text-center h-100 border-0 shadow-sm">
+              <Card className="award-card bg-black text-center h-100 border-0 shadow-sm">
                 <Card.Img
                   variant="top"
                   src={award.image}

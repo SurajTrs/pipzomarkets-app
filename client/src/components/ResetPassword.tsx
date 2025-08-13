@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
-import { Alert } from "react-bootstrap";
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { Alert } from 'react-bootstrap';
 import axios from 'axios';
-import "../style.css";
+import '../style.css';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5001/api';
 

@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { AdvancedChart } from 'react-tradingview-embed';
 import { Accordion } from 'react-bootstrap';
 
 const ApplePage: React.FC = () => {
   const [quantity, setQuantity] = useState<number>(0);
+  const navigate = useNavigate();
   const currentPrice = 210.06;
   const estimatedCost = quantity * currentPrice;
 
@@ -88,14 +90,14 @@ const ApplePage: React.FC = () => {
           <div className="d-flex gap-3 mb-4">
             <button
               className="btn btn-warning flex-grow-1"
-              onClick={() => alert(`Buying ${quantity} shares for $${estimatedCost.toFixed(2)}`)}
+              onClick={() => navigate(`/dashboard?tab=trading`)}
               disabled={quantity <= 0}
             >
               Buy Apple
             </button>
             <button
               className="btn btn-secondary flex-grow-1"
-              onClick={() => alert(`Selling ${quantity} shares for $${estimatedCost.toFixed(2)}`)}
+              onClick={() => navigate(`/dashboard?tab=trading`)}
               disabled={quantity <= 0}
             >
               Sell Apple

@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { AdvancedChart } from 'react-tradingview-embed';
 import { Accordion } from 'react-bootstrap';
 
 const EurUsdPage: React.FC = () => {
   const [quantity, setQuantity] = useState<number>(0);
+  const navigate = useNavigate();
   const currentPrice = 1.16483;
   const estimatedCost = quantity * currentPrice;
 
@@ -85,14 +87,14 @@ const EurUsdPage: React.FC = () => {
           <div className="d-flex gap-3 mb-4">
             <button
               className="btn btn-success flex-grow-1"
-              onClick={() => alert(`Buying ${quantity} EUR/USD at $${estimatedCost.toFixed(5)}`)}
+              onClick={() => navigate(`/dashboard?tab=trading&instrument=EUR_USD&side=buy`)}
               disabled={quantity <= 0}
             >
               Buy
             </button>
             <button
               className="btn btn-danger flex-grow-1"
-              onClick={() => alert(`Selling ${quantity} EUR/USD at $${estimatedCost.toFixed(5)}`)}
+              onClick={() => navigate(`/dashboard?tab=trading&instrument=EUR_USD&side=sell`)}
               disabled={quantity <= 0}
             >
               Sell

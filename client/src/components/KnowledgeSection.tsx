@@ -9,7 +9,7 @@ const knowledgeItems = [
     linkText: 'Learn More',
   },
   {
-    title: 'AvaTrade’s Complete Trading eBook',
+    title: 'PipzoMarkets’ Complete Trading eBook',
     description:
       'Get a deep understanding on online trading and enjoy some valuable trading tips and strategies to kick off your journey.',
     linkText: 'Learn More',

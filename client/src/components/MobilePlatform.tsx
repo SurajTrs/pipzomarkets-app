@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container, Row, Col, Button } from 'react-bootstrap';
 import { FaBell, FaChartLine, FaMoneyCheckAlt, FaApple, FaAndroid } from 'react-icons/fa';
-
+import TradingAppImage from '../assets/images/trading-app.png'; 
 const MobilePlatforms: React.FC = () => {
   return (
     <section className="mobile-platforms-section py-5 text-light">
@@ -9,7 +9,7 @@ const MobilePlatforms: React.FC = () => {
         <Row className="align-items-center g-5">
           <Col md={6}>
             <img
-              src="/images/trading-app.png"
+              src={TradingAppImage} 
               alt="Mobile Trading Platform"
               className="img-fluid rounded shadow-lg"
             />

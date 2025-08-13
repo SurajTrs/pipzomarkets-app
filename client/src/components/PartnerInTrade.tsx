@@ -1,8 +1,28 @@
+
 import React from 'react';
 import '../style.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+// Import placeholder images (replace with actual images when added)
+import PipzoMarketLogo from '../assets/PipzoMarketLogo.png'; // Fallback for missing images
+import TrackImage from '../assets/track.jpg'; // Add this file
+// Add these images to src/assets/ or src/assets/images/
+import GeoTrust from '../assets/geotrust.png'; // Add this file
+import McAfee from '../assets/mcafee.png'; // Add this file
+import Barclays from '../assets/barclays.png'; // Add this file
+import Trustpilot from '../assets/trustpilot.png'; // Add this file
+import SSLSecure from '../assets/ssl-secure.png'; // Add this file
 
 const PartnerInTrade: React.FC = () => {
+  const trustedLogos = [
+    { src: GeoTrust, alt: 'GeoTrust' },
+    { src: McAfee, alt: 'McAfee' },
+    { src: Barclays, alt: 'Barclays' },
+    { src: Trustpilot, alt: 'Trustpilot' },
+    { src: SSLSecure, alt: 'SSL Secure' },
+    // Fallback for testing
+    { src: PipzoMarketLogo, alt: 'PipzoMarkets Fallback' },
+  ];
+
   return (
     <div
       className="partner-section py-5 text-white"
@@ -13,7 +33,6 @@ const PartnerInTrade: React.FC = () => {
     >
       <div className="container">
         <div className="row align-items-center g-5">
-    
           <div className="col-lg-6 text-lg-start text-center">
             <h2 className="fw-bold display-5 mb-3">
               Become our <span style={{ color: '#00BFA6' }}>Partner in Trade</span>
@@ -34,7 +53,6 @@ const PartnerInTrade: React.FC = () => {
             </div>
           </div>
 
-     
           <div className="col-lg-6 text-center">
             <div
               className="rounded-4 overflow-hidden shadow"
@@ -45,10 +63,10 @@ const PartnerInTrade: React.FC = () => {
               }}
             >
               <img
-                src="/assets/track.jpg"
+                src={TrackImage}
                 alt="Partner Dashboard"
                 className="img-fluid w-100"
-                style={{ maxHeight: '700px', objectFit: 'cover' }}
+                style={{ maxHeight: 'auto', objectFit: 'cover' }}
               />
             </div>
           </div>
@@ -56,21 +74,21 @@ const PartnerInTrade: React.FC = () => {
 
         {/* Trusted Logos */}
         <div className="mt-5">
-          <p className="fw-semibold text-center mb-4 text-muted">Trusted By</p>
-          <div className="d-flex justify-content-center flex-wrap gap-4">
-            {[
-              { src: '/assets/geotrust.png', alt: 'GeoTrust' },
-              { src: '/assets/mcafee.png', alt: 'McAfee' },
-              { src: '/assets/barclays.png', alt: 'Barclays' },
-              { src: '/assets/trustpilot.png', alt: 'Trustpilot' },
-              { src: '/assets/ssl-secure.png', alt: 'SSL Secure' },
-            ].map((logo, i) => (
+          <p className="fw-semibold text-center mb-4 text-white">Trusted By</p>
+          <div className="d-flex justify-content-center flex-wrap gap-3">
+            {trustedLogos.map((logo, i) => (
               <div
                 key={i}
                 className="bg-white rounded shadow-sm p-2"
-                style={{ height: '55px', display: 'flex', alignItems: 'center' }}
+                style={{ height: '36px', display: 'flex', alignItems: 'center' }}
               >
-                <img src={logo.src} alt={logo.alt} height="30" />
+                <img
+                  src={logo.src}
+                  alt={logo.alt}
+                  height="16"
+                  className="trusted-logo"
+                  style={{ maxWidth: '32px' }}
+                />
               </div>
             ))}
           </div>

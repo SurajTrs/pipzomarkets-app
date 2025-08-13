@@ -76,6 +76,8 @@ import CrudeOilPage from "./pages/TradingInfo/Commodities/CrudeOilPage";
 import ApplePage from "./pages/TradingInfo/Stocks/ApplePage";
 import EurUsdPage from "./pages/TradingInfo/Forex pairs/EurUsdPage";
 import US500Page from "./pages/TradingInfo/Options/US500Page";
+import InstrumentsIndex from "./pages/TradingInfo/InstrumentsIndex";
+import InstrumentPage from "./pages/TradingInfo/InstrumentPage";
 import CurrencyTradingPage from "./pages/Education/Trading for Beginners/CurrencyTradingPage";
 import HowtoTradeOnline from "./pages/Education/Trading for Beginners/HowtoTradeOnline";
 import CopyTradingPage from "./pages/Education/Trading for Beginners/ CopyTradingPage";
@@ -180,6 +182,9 @@ const App: React.FC = () => {
           <Route path="/ApplePage" element={<ApplePage />} />
           <Route path="/EurUsdPage" element={<EurUsdPage />} />
           <Route path="/US500Page" element={<US500Page />} />
+          {/* Markets index and dynamic instrument routes */}
+          <Route path="/markets" element={<InstrumentsIndex />} />
+          <Route path="/instrument/:slug" element={<InstrumentPage />} />
           <Route path="/HowtoTradeOnline" element={<HowtoTradeOnline />} />
           <Route path="/CurrencyTradingPage" element={<CurrencyTradingPage />} />
           <Route path="/CopyTradingPage" element={<CopyTradingPage />} />

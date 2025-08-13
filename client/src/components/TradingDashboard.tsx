@@ -1,15 +1,18 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useMemo } from "react";
+import { useLocation } from 'react-router-dom';
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../style.css";
 import { useAuth } from '../context/useAuth';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { AdvancedChart } from 'react-tradingview-embed';
+import axios from 'axios';
 
 // Define interface for useAuth return value (adjust based on your actual useAuth implementation)
 interface AuthContextType {
-  user: { id: string; name: string } | null; // Example, adjust as needed
+  user: { id: string; name: string } | null;
   isAuthenticated: boolean;
+  token?: string | null;
 }
 
 // NumberInput component (from previous context)
@@ -42,8 +45,9 @@ const NumberInput: React.FC<NumberInputProps> = ({ amount, setAmount }) => {
 };
 
 const TradingDashboard: React.FC = () => {
-  const [selectedCategory, setSelectedCategory] = useState<string>("Most Popular");
-  const [selectedInstrument, setSelectedInstrument] = useState<string | null>(null);
+  const location = useLocation();
+  const [selectedCategory, setSelectedCategory] = useState<string>("Forex Majors");
+  const [selectedInstrument, setSelectedInstrument] = useState<string | null>(null); // OANDA symbol e.g., EUR_USD
   const [orderType, setOrderType] = useState<'buy' | 'sell'>('buy');
   const [amount, setAmount] = useState<number>(100);
   const [leverage, setLeverage] = useState<number>(1);
@@ -53,7 +57,9 @@ const TradingDashboard: React.FC = () => {
   const [lastUpdated, setLastUpdated] = useState<Date>(new Date());
   const leftBoxRef = useRef<HTMLDivElement>(null);
   const [, setLeftHeight] = useState<number | undefined>(undefined);
-  const { isAuthenticated } = useAuth() as AuthContextType; // Type the useAuth return value
+  const { isAuthenticated, token } = useAuth() as AuthContextType; // Type the useAuth return value
+
+  const API_URL = useMemo(() => (import.meta.env.VITE_API_URL || 'http://localhost:5001/api'), []);
 
   useEffect(() => {
     if (leftBoxRef.current) {
@@ -70,24 +76,80 @@ const TradingDashboard: React.FC = () => {
   }, []);
 
   interface Instrument {
-    name: string;
-    sell: string;
-    buy: string;
-    change: string;
+    name: string; // Display name e.g., EUR/USD
+    symbol: string; // OANDA symbol e.g., EUR_USD
   }
 
-  const allInstruments: Record<string, Instrument[]> = {
-    "Most Popular": [
-      { name: "TESLA", sell: "326.61", buy: "326.98", change: "-3.86%" },
-      { name: "AMAZON", sell: "211.88", buy: "212.19", change: "-0.51%" },
-      { name: "APPLE", sell: "201.19", buy: "201.40", change: "+0.31%" },
-      { name: "NETFLIX", sell: "1.00", buy: "1.00", change: "-0.32%" },
-      { name: "EUR/USD", sell: "1.1720", buy: "1.1726", change: "+0.12%" },
-      { name: "GBP/USD", sell: "1.2660", buy: "1.2665", change: "-0.09%" },
-      { name: "MICROSOFT", sell: "492.12", buy: "492.78", change: "+0.47%" },
-      { name: "PFIZER", sell: "24.24", buy: "24.33", change: "-0.08%" },
-    ],
+  type PriceTick = {
+    type: string;
+    instrument?: string;
+    bids?: { price: string }[];
+    asks?: { price: string }[];
+    time?: string;
   };
+
+  // live prices map: symbol -> { bid, ask, base }
+  const [prices, setPrices] = useState<Record<string, { bid: number; ask: number; base: number; time?: string }>>({});
+
+  const allInstruments: Record<string, Instrument[]> = {
+    "Forex Majors": [
+      { name: "EUR/USD", symbol: "EUR_USD" },
+      { name: "GBP/USD", symbol: "GBP_USD" },
+      { name: "USD/JPY", symbol: "USD_JPY" },
+      { name: "USD/CHF", symbol: "USD_CHF" },
+      { name: "AUD/USD", symbol: "AUD_USD" },
+      { name: "USD/CAD", symbol: "USD_CAD" }
+    ]
+  };
+
+  // Initialize instrument and side from URL query params if provided
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const instr = params.get('instrument');
+    const side = params.get('side');
+    if (side === 'buy' || side === 'sell') setOrderType(side);
+    if (instr) {
+      // validate against known instruments
+      const all = Object.values(allInstruments).flat();
+      const exists = all.find(i => i.symbol === instr || i.name === instr);
+      if (exists) {
+        setSelectedInstrument(exists.symbol);
+      }
+    }
+  }, [location.search]);
+
+  // Start SSE stream for all instruments in the active category
+  useEffect(() => {
+    const list = allInstruments[selectedCategory] || [];
+    const symbols = Array.from(new Set(list.map(i => i.symbol)));
+    if (symbols.length === 0) return;
+
+    const tokenParam = token ? `&token=${encodeURIComponent(token)}` : '';
+    const url = `${API_URL}/prices/stream?instruments=${encodeURIComponent(symbols.join(','))}${tokenParam}`;
+    const evt = new EventSource(url);
+
+    evt.onmessage = (e) => {
+      try {
+        const msg: PriceTick = JSON.parse(e.data);
+        if (msg.type === 'PRICE' && msg.instrument && msg.bids && msg.asks) {
+          const bid = parseFloat(msg.bids[0]?.price || '0');
+          const ask = parseFloat(msg.asks[0]?.price || '0');
+          setPrices(prev => {
+            const base = prev[msg.instrument!]?.base ?? ((bid + ask) / 2);
+            return { ...prev, [msg.instrument!]: { bid, ask, base, time: msg.time } };
+          });
+          setLastUpdated(new Date());
+        }
+      } catch { /* ignore */ }
+    };
+
+    evt.addEventListener('error', () => {
+      console.warn('Price stream error');
+      evt.close();
+    });
+
+    return () => evt.close();
+  }, [selectedCategory, API_URL]);
 
   const handleTrade = async () => {
     if (!isAuthenticated) {
@@ -107,20 +169,28 @@ const TradingDashboard: React.FC = () => {
 
     try {
       setIsLoading(true);
-      const instrument = allInstruments[selectedCategory]?.find(i => i.name === selectedInstrument);
+      const instrument = allInstruments[selectedCategory]?.find(i => i.name === selectedInstrument || i.symbol === selectedInstrument);
       if (!instrument) {
         toast.error("Instrument not found");
         return;
       }
 
-      const price = orderType === 'buy' ? parseFloat(instrument.buy) : parseFloat(instrument.sell);
-      
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      toast.success(`${orderType.toUpperCase()} order placed for ${selectedInstrument} at ${price}`);
-    } catch (error) {
+      // For simplicity, interpret amount as units directly.
+      const units = Math.max(1, Math.round(amount)) * (orderType === 'sell' ? -1 : 1);
+
+      const headers = token ? { Authorization: `Bearer ${token}` } : undefined;
+      const resp = await axios.post(`${API_URL}/orders`, {
+        instrument: instrument.symbol,
+        type: orderType,
+        units: Math.abs(units),
+        clientOrderId: `cli-${Date.now()}`
+      }, { headers });
+
+      toast.success(`${orderType.toUpperCase()} order placed for ${instrument.name} (id: ${resp.data?.orderId || 'n/a'})`);
+    } catch (error: any) {
       console.error('Trade error:', error);
-      toast.error("Failed to place trade");
+      const msg = error?.response?.data?.message || 'Failed to place trade';
+      toast.error(msg);
     } finally {
       setIsLoading(false);
     }
@@ -195,43 +265,49 @@ const TradingDashboard: React.FC = () => {
                 </tr>
               </thead>
               <tbody>
-                {allInstruments[selectedCategory]?.map((item, i) => (
+                {allInstruments[selectedCategory]?.map((item, i) => {
+                  const p = prices[item.symbol];
+                  const mid = (p && Number.isFinite(p.bid) && Number.isFinite(p.ask)) ? (p.bid + p.ask) / 2 : undefined;
+                  const changePct = (p && mid !== undefined && Number.isFinite(p.base) && p.base !== 0)
+                    ? (((mid - p.base) / p.base) * 100)
+                    : undefined;
+                  return (
                   <tr
                     key={i}
                     style={{
-                      backgroundColor: selectedInstrument === item.name 
+                      backgroundColor: selectedInstrument === item.name || selectedInstrument === item.symbol
                         ? "rgba(0, 191, 166, 0.2)" 
                         : "rgba(255,255,255,0.02)",
                       transition: "0.2s ease",
                       cursor: "pointer",
                     }}
-                    onClick={() => setSelectedInstrument(item.name)}
+                    onClick={() => setSelectedInstrument(item.symbol)}
                     onMouseEnter={(e) =>
-                      (e.currentTarget.style.backgroundColor = selectedInstrument === item.name 
+                      (e.currentTarget.style.backgroundColor = selectedInstrument === item.name || selectedInstrument === item.symbol
                         ? "rgba(0, 191, 166, 0.2)" 
                         : "rgba(0, 191, 166, 0.1)")
                     }
                     onMouseLeave={(e) =>
-                      (e.currentTarget.style.backgroundColor = selectedInstrument === item.name 
+                      (e.currentTarget.style.backgroundColor = selectedInstrument === item.name || selectedInstrument === item.symbol
                         ? "rgba(0, 191, 166, 0.2)" 
                         : "rgba(255,255,255,0.02)")
                     }
                   >
                     <td className="fw-bold">{item.name}</td>
-                    <td className="text-info">{item.sell}</td>
-                    <td className="text-info">{item.buy}</td>
-                    <td className={item.change.startsWith("-") ? "text-danger" : "text-success"}>
-                      {item.change}
+                    <td className="text-info">{p ? p.bid.toFixed(5) : '--'}</td>
+                    <td className="text-info">{p ? p.ask.toFixed(5) : '--'}</td>
+                    <td className={changePct && changePct < 0 ? "text-danger" : "text-success"}>
+                      {changePct !== undefined ? `${changePct.toFixed(2)}%` : '—'}
                     </td>
                     <td>
                       <button 
                         className="btn btn-sm btn-outline-success me-1"
                         onClick={(e) => {
                           e.stopPropagation();
-                          setSelectedInstrument(item.name);
+                          setSelectedInstrument(item.symbol);
                           setOrderType('buy');
                         }}
-                        aria-label={`Buy ${item.name}`}
+                        aria-label={`Buy ${item.symbol}`}
                       >
                         Buy
                       </button>
@@ -239,16 +315,16 @@ const TradingDashboard: React.FC = () => {
                         className="btn btn-sm btn-outline-danger"
                         onClick={(e) => {
                           e.stopPropagation();
-                          setSelectedInstrument(item.name);
+                          setSelectedInstrument(item.symbol);
                           setOrderType('sell');
                         }}
-                        aria-label={`Sell ${item.name}`}
+                        aria-label={`Sell ${item.symbol}`}
                       >
                         Sell
                       </button>
                     </td>
                   </tr>
-                )) || (
+                );}) || (
                   <tr>
                     <td colSpan={5} className="text-center">No instruments available</td>
                   </tr>
@@ -270,9 +346,9 @@ const TradingDashboard: React.FC = () => {
                 >
                   <AdvancedChart
                     widgetProps={{
-                      symbol: selectedInstrument.includes('/') 
-                        ? `FX:${selectedInstrument.replace('/', '')}` 
-                        : `NASDAQ:${selectedInstrument}`,
+                      symbol: selectedInstrument.includes('_') 
+                        ? `FX:${selectedInstrument.replace('_', '')}` 
+                        : `FX:${selectedInstrument.replace('/', '')}`,
                       theme: 'dark',
                       style: '1',
                       locale: 'en',
@@ -315,7 +391,7 @@ const TradingDashboard: React.FC = () => {
                   </div>
 
                   <div className="mb-3">
-                    <label htmlFor="amount-input" className="form-label">Amount ($)</label>
+                    <label htmlFor="amount-input" className="form-label">Units</label>
                     <NumberInput amount={amount} setAmount={setAmount} />
                   </div>
 

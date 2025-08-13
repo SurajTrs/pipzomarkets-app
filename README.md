@@ -83,12 +83,16 @@ A comprehensive trading platform with authentication, user dashboard, and real-t
 3. Server validates credentials and returns a JWT token
 4. Client stores the token in localStorage
 5. Protected routes check for valid token before rendering
+6. User can request password reset via email if forgotten
+7. User receives a reset link with a token and can set a new password
 
 ## API Endpoints
 
 - `POST /api/register` - Register a new user
 - `POST /api/login` - Login a user
 - `GET /api/user` - Get user data (protected route)
+- `POST /api/forgot-password` - Request password reset email
+- `POST /api/reset-password` - Reset password with token
 
 ## Technologies Used
 

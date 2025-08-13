@@ -1,13 +1,53 @@
-import React, { useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { useAuth } from '../context/useAuth';
 import { Container, Row, Col, Card, Button, Nav, Tab, Alert } from 'react-bootstrap';
 import { FaUser, FaChartLine, FaHistory, FaWallet, FaCog, FaSignOutAlt } from 'react-icons/fa';
 import '../style.css';
 import TradingDashboard from './TradingDashboard';
+import axios from 'axios';
 
 const UserDashboard: React.FC = () => {
-  const { user, logout } = useAuth();
+  const { user, token, logout } = useAuth() as any;
+  const location = useLocation();
   const [activeTab, setActiveTab] = useState('overview');
+  const API_URL = useMemo(() => (import.meta.env.VITE_API_URL || 'http://localhost:5001/api'), []);
+
+  const [accountSummary, setAccountSummary] = useState<any | null>(null);
+  const [openPositions, setOpenPositions] = useState<any[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    // set tab from query param if provided
+    const params = new URLSearchParams(location.search);
+    const tab = params.get('tab');
+    if (tab && ['overview','trading','history','wallet','settings'].includes(tab)) {
+      setActiveTab(tab);
+    }
+  }, [location.search]);
+
+  useEffect(() => {
+    const load = async () => {
+      if (!token) return;
+      try {
+        setLoading(true);
+        setError(null);
+        const headers = { Authorization: `Bearer ${token}` };
+        const [summaryRes, positionsRes] = await Promise.all([
+          axios.get(`${API_URL}/account/summary`, { headers }),
+          axios.get(`${API_URL}/positions`, { headers })
+        ]);
+        setAccountSummary(summaryRes.data?.account || summaryRes.data);
+        setOpenPositions(Array.isArray(positionsRes.data?.positions) ? positionsRes.data.positions : []);
+      } catch (e: any) {
+        setError(e?.response?.data?.message || 'Failed to load account data');
+      } finally {
+        setLoading(false);
+      }
+    };
+    load();
+  }, [token, API_URL]);
   
   // Form state for personal information
   const [formData, setFormData] = useState({
@@ -68,13 +108,8 @@ const UserDashboard: React.FC = () => {
     });
   };
 
-  // Mock trading history data
-  const tradingHistory = [
-    { id: 1, instrument: 'EUR/USD', type: 'BUY', amount: 1000, openPrice: 1.1720, closePrice: 1.1750, profit: 30, date: '2023-10-15' },
-    { id: 2, instrument: 'AAPL', type: 'SELL', amount: 500, openPrice: 180.50, closePrice: 178.20, profit: 115, date: '2023-10-14' },
-    { id: 3, instrument: 'GOLD', type: 'BUY', amount: 800, openPrice: 1950.40, closePrice: 1970.80, profit: 163.2, date: '2023-10-12' },
-    { id: 4, instrument: 'TSLA', type: 'BUY', amount: 600, openPrice: 240.30, closePrice: 235.10, profit: -31.2, date: '2023-10-10' },
-  ];
+  // Placeholder trading history until order history endpoint exists
+  const tradingHistory: any[] = [];
 
   return (
     <Container fluid className="py-4">
@@ -148,8 +183,12 @@ const UserDashboard: React.FC = () => {
                     <Card className="border-0 shadow-sm h-100">
                       <Card.Body>
                         <h6 className="text-muted mb-2">Account Balance</h6>
-                        <h3 className="mb-0">${user?.balance.toLocaleString()}</h3>
-                        <small className="text-muted">Account Type: {user?.accountType === 'demo' ? 'Demo' : 'Real'}</small>
+                        <h3 className="mb-0">
+                          {loading ? '—' : `$${Number(accountSummary?.balance || user?.balance || 0).toLocaleString()}`}
+                        </h3>
+                        <small className="text-muted">
+                          Account Type: {accountSummary ? (accountSummary?.resettablePL ? 'Practice' : 'Real') : (user?.accountType === 'demo' ? 'Demo' : 'Real')}
+                        </small>
                       </Card.Body>
                     </Card>
                   </Col>
@@ -157,8 +196,8 @@ const UserDashboard: React.FC = () => {
                     <Card className="border-0 shadow-sm h-100">
                       <Card.Body>
                         <h6 className="text-muted mb-2">Open Positions</h6>
-                        <h3 className="mb-0">3</h3>
-                        <small className="text-success">+2 since yesterday</small>
+                        <h3 className="mb-0">{loading ? '—' : (accountSummary?.openPositionCount ?? openPositions.length ?? 0)}</h3>
+                        <small className="text-muted">via OANDA</small>
                       </Card.Body>
                     </Card>
                   </Col>
@@ -166,8 +205,10 @@ const UserDashboard: React.FC = () => {
                     <Card className="border-0 shadow-sm h-100">
                       <Card.Body>
                         <h6 className="text-muted mb-2">Total Profit/Loss</h6>
-                        <h3 className="text-success mb-0">+$277.00</h3>
-                        <small className="text-muted">Last 30 days</small>
+                        <h3 className={(Number(accountSummary?.pl) || Number(accountSummary?.unrealizedPL) || 0) >= 0 ? 'text-success mb-0' : 'text-danger mb-0'}>
+                          {loading ? '—' : `$${Number(accountSummary?.pl || accountSummary?.unrealizedPL || 0).toLocaleString(undefined, { maximumFractionDigits: 2 })}`}
+                        </h3>
+                        <small className="text-muted">Unrealized P/L</small>
                       </Card.Body>
                     </Card>
                   </Col>
@@ -180,33 +221,40 @@ const UserDashboard: React.FC = () => {
                         <h5 className="mb-0">Recent Trading Activity</h5>
                       </Card.Header>
                       <Card.Body>
+                        {error && <Alert variant="danger" className="mb-3">{error}</Alert>}
                         <div className="table-responsive">
                           <table className="table table-hover">
                             <thead>
                               <tr>
                                 <th>Instrument</th>
-                                <th>Type</th>
-                                <th>Amount</th>
-                                <th>Profit/Loss</th>
-                                <th>Date</th>
+                                <th>Side</th>
+                                <th>Units</th>
+                                <th>Avg Price</th>
+                                <th>Unrealized P/L</th>
                               </tr>
                             </thead>
                             <tbody>
-                              {tradingHistory.slice(0, 3).map(trade => (
-                                <tr key={trade.id}>
-                                  <td>{trade.instrument}</td>
-                                  <td>
-                                    <span className={`badge ${trade.type === 'BUY' ? 'bg-success' : 'bg-danger'}`}>
-                                      {trade.type}
-                                    </span>
-                                  </td>
-                                  <td>${trade.amount}</td>
-                                  <td className={trade.profit >= 0 ? 'text-success' : 'text-danger'}>
-                                    {trade.profit >= 0 ? '+' : ''}{trade.profit.toFixed(2)}
-                                  </td>
-                                  <td>{trade.date}</td>
-                                </tr>
-                              ))}
+                              {openPositions.length === 0 && (
+                                <tr><td colSpan={5} className="text-muted">No open positions</td></tr>
+                              )}
+                              {openPositions.map((p: any, idx: number) => {
+                                // OANDA openPositions item structure: { instrument, long: { units, averagePrice, pl, ... }, short: {...} }
+                                const longUnits = Number(p?.long?.units || 0);
+                                const shortUnits = Number(p?.short?.units || 0);
+                                const side = longUnits > 0 ? 'LONG' : (shortUnits < 0 ? 'SHORT' : 'FLAT');
+                                const units = longUnits !== 0 ? longUnits : shortUnits;
+                                const avg = longUnits !== 0 ? p?.long?.averagePrice : p?.short?.averagePrice;
+                                const upl = longUnits !== 0 ? Number(p?.long?.pl || 0) : Number(p?.short?.pl || 0);
+                                return (
+                                  <tr key={idx}>
+                                    <td>{p.instrument}</td>
+                                    <td><span className={`badge ${side === 'LONG' ? 'bg-success' : (side === 'SHORT' ? 'bg-danger' : 'bg-secondary')}`}>{side}</span></td>
+                                    <td>{units}</td>
+                                    <td>{avg || '—'}</td>
+                                    <td className={upl >= 0 ? 'text-success' : 'text-danger'}>{upl >= 0 ? '+' : ''}{upl.toFixed(2)}</td>
+                                  </tr>
+                                );
+                              })}
                             </tbody>
                           </table>
                         </div>

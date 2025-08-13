@@ -8,7 +8,7 @@ const infoCards = [
   },
   {
     title: 'You Deserve The Best',
-    text: 'Use Expert Advisors, Copy Trading platforms, AvaProtect™, and Trading Central analysis tools – crafted for your success.',
+    text: 'Use Expert Advisors, Copy Trading platforms, PipzoProtect™, and Trading Central analysis tools – crafted for your success.',
   },
   {
     title: 'Endless Possibilities',
@@ -29,7 +29,7 @@ const WhyDifferent: React.FC = () => {
     <section
       className="text-white py-5"
       style={{
-        backgroundImage: 'linear-gradient(to right, rgba(0,0,0,0.9), rgba(0,0,0,0.7)), url(/assets/racer.jpg)',
+        backgroundImage: 'linear-gradient(to right, rgba(0, 0, 0, 1), rgba(0, 0, 0, 1)), url(/assets/racer.jpg)',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         fontFamily: 'Segoe UI, sans-serif',
@@ -37,7 +37,7 @@ const WhyDifferent: React.FC = () => {
     >
       <div className="container">
         <h2 className="fw-bold display-5 text-center mb-3">
-          What Makes <span style={{ color: '#00BFA6' }}>AvaTrade</span> Different?
+          What Makes <span style={{ color: '#00BFA6' }}>PipzoMarkets</span> Different?
         </h2>
         <p className="lead text-center text-light mb-5">
           Join over 1 million returning clients who already made the right choice
@@ -49,8 +49,8 @@ const WhyDifferent: React.FC = () => {
               <div
                 className="p-4 rounded-4 shadow h-100 card-glass"
                 style={{
-                  background: 'rgba(255,255,255,0.06)',
-                  border: '1px solid rgba(255,255,255,0.1)',
+                  background: 'rgba(0, 0, 0, 0.06)',
+                  border: '1px solid rgba(255, 255, 255, 0.38)',
                   backdropFilter: 'blur(10px)',
                   transition: 'transform 0.3s ease',
                 }}
