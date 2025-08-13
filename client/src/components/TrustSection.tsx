@@ -103,7 +103,7 @@ const TrustSection: React.FC = () => {
                         backgroundColor: '#00BFA6',
                         minWidth: '60px',
                         textAlign: 'center',
-                        fontSize: '0.75rem', // Small, icon-like text
+                        fontSize: '0.75rem',
                       }}
                     >
                       {code}

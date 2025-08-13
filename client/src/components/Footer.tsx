@@ -33,11 +33,8 @@ const Footer = () => {
 
   const socialPlatforms = [
     { name: 'facebook', src: Facebook, href: 'https://www.facebook.com/profile.php?id=61577357139254&sk=about' },
-    { name: 'youtube', src: YouTube, href: 'https://www.youtube.com/PipzoMarkets' },
     { name: 'instagram', src: Instagram, href: 'https://www.instagram.com/pipzomarket' },
     { name: 'twitter', src: Twitter, href: 'https://x.com/pipzomarket' },
-    { name: 'linkedin', src: LinkedIn, href: 'https://www.linkedin.com/company/PipzoMarkets' },
-    { name: 'telegram', src: Telegram, href: 'https://t.me/PipzoMarkets' },
   ];
 
   const footerSections = [
