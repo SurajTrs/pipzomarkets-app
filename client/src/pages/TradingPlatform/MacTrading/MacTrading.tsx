@@ -1,331 +1,259 @@
-// File: components/PipzoTradeApp.tsx
 import React from 'react';
 import { Container, Row, Col, Button } from 'react-bootstrap';
-import { FaApple, FaBolt, FaCalendarAlt, FaChartBar, FaChartLine, FaChartPie, FaClipboardCheck, FaClipboardList, FaCogs, FaDownload, FaEnvelope, FaFileAlt, FaFolderOpen, FaKeyboard, FaLayerGroup, FaLock, FaMousePointer, FaPuzzlePiece, FaRobot, FaSignInAlt, FaSyncAlt, FaWrench } from 'react-icons/fa';
+import { FaApple, FaBolt, FaCalendarAlt, FaChartBar, FaChartLine, FaChartPie, FaClipboardCheck, FaClipboardList, FaCogs, FaDownload, FaFileAlt, FaFolderOpen, FaKeyboard, FaLayerGroup, FaLock, FaMousePointer, FaPuzzlePiece, FaRobot, FaSignInAlt, FaWrench } from 'react-icons/fa';
 
-const MacTrading: React.FC = () => {
+const PipzoMarketsMacTrading: React.FC = () => {
   return (
     <>
-    <div style={{ backgroundColor: '#014421' }} className="text-dark py-5">
-      <Container className="text-center">
-        {/* Title and Text */}
-        <h2 className="fw-bold mb-3" style={{ color: '#145214' }}>
-          Mac Trading in United Kingdom
-        </h2>
-        <h5 className="mb-4 text-warning">AvaTrade’s Mac Trading Platforms</h5>
-        <p className="fs-5">
-          Are you a Mac user? We proudly offer leading trading platforms on both desktop and mobile
-          tailored for Mac. Trade over 250 assets including currencies, commodities, cryptos, and stocks—
-          anytime, anywhere—using MetaTrader 4/5 or WebTrader with powerful charting tools and smooth navigation.
-        </p>
-        <p className="fs-5 fw-semibold text-dark">
-          Don’t miss your opportunity! <span className="text-warning">Enjoy competitive spreads & high leverage.</span>
-        </p>
+      <div style={{ background: 'linear-gradient(135deg, #014421 0%, #1a5e34 100%)' }} className="text-white py-5">
+        <Container className="text-center">
+          <Row className="justify-content-center">
+            <Col lg={10}>
+              <h2 className="fw-bold mb-3" style={{ fontSize: '2.5rem', color: '#ffffff' }}>
+                Mac Trading with PipzoMarkets
+              </h2>
+              <h5 className="mb-4" style={{ color: '#ffd700', fontWeight: 500 }}>
+                Advanced Trading Platforms for macOS
+              </h5>
+              <p className="fs-5 mb-4" style={{ color: '#e0e0e0' }}>
+                Tailored for Mac users in the United Kingdom, PipzoMarkets offers cutting-edge trading platforms for desktop and mobile. Access over 250 financial instruments, including forex, commodities, cryptocurrencies, and equities, with seamless navigation and advanced charting tools via MetaTrader 4/5 or WebTrader.
+              </p>
+              <p className="fs-5 fw-semibold mb-4" style={{ color: '#ffffff' }}>
+                Elevate your trading with <span style={{ color: '#ffd700' }}>competitive spreads and high leverage</span>.
+              </p>
+              <div className="d-flex justify-content-center gap-3 flex-wrap">
+                <Button
+                  style={{ backgroundColor: '#00c37a', borderColor: '#00c37a', fontWeight: 600, padding: '0.75rem 2rem' }}
+                  size="lg"
+                >
+                  Download for Mac
+                </Button>
+                <Button
+                  variant="outline-light"
+                  size="lg"
+                  style={{ fontWeight: 600, padding: '0.75rem 2rem' }}
+                >
+                  Start Web Trading
+                </Button>
+              </div>
+            </Col>
+          </Row>
+          <Row className="mt-5">
+            <Col>
+              <img
+                src="/assets/pipzomarkets-mac-trading.png"
+                alt="PipzoMarkets Mac Trading"
+                className="img-fluid w-100"
+                style={{
+                  borderRadius: '0.75rem',
+                  boxShadow: '0 8px 24px rgba(0, 0, 0, 0.2)',
+                  maxHeight: '450px',
+                  objectFit: 'cover',
+                }}
+              />
+            </Col>
+          </Row>
+        </Container>
+      </div>
 
-        {/* Buttons */}
-        <div className="mt-4 d-flex justify-content-center gap-3 flex-wrap">
-          <Button variant="success" size="lg" className="fw-semibold px-4">
-            Download for Mac
-          </Button>
-          <Button variant="outline-dark" size="lg" className="fw-semibold px-4">
-            Start Web Trading
-          </Button>
-        </div>
+      <div style={{ backgroundColor: '#f8fafc' }} className="text-dark py-5">
+        <Container>
+          <Row className="justify-content-center">
+            <Col lg={10}>
+              <h2 className="fw-bold mb-4" style={{ color: '#1a202c', fontSize: '2rem' }}>
+                Seamless Mac Online Trading
+              </h2>
+              <p className="fs-5 mb-3" style={{ color: '#4a5568' }}>
+                PipzoMarkets brings the world of online trading to Mac users with robust, macOS-optimized solutions. Historically, trading platforms were designed primarily for Windows, leaving Mac users reliant on virtualization software. Now, PipzoMarkets offers native and browser-based platforms, ensuring a seamless and powerful trading experience.
+              </p>
+              <p className="fs-5 mb-3" style={{ color: '#4a5568' }}>
+                Our platforms are engineered for performance, offering Mac users access to advanced tools, real-time data, and a sophisticated trading environment without compromises.
+              </p>
+              <p className="fs-5 fw-semibold" style={{ color: '#1a202c' }}>
+                Join PipzoMarkets and unlock a world of trading opportunities designed specifically for your Mac.
+              </p>
+            </Col>
+          </Row>
+        </Container>
+      </div>
 
-        {/* Full-width Image */}
-        <Row className="mt-5">
-          <Col>
-            <img
-              src="/assets/mac-trading.png"
-              alt="Mac Trading UK"
-              className="img-fluid w-100"
-              style={{
-                borderRadius: '1rem',
-                boxShadow: '0 0 15px rgba(0, 0, 0, 0.1)',
-                maxHeight: '500px',
-                objectFit: 'cover',
-              }}
-            />
-          </Col>
-        </Row>
-      </Container>
-    </div>
-    <div style={{ backgroundColor: '#f0fdf4' }} className="text-dark py-5">
-  <Container>
-    <Row className="justify-content-left text-left">
-      <Col lg={10}>
-        <h2 className="fw-bold mb-4" style={{ color: '#145214' }}>
-          Mac Online Trading
-        </h2>
-        <p className="fs-5 mb-3">
-          For many years, global financial traders have lamented the lack of trading options for the superior Mac platform.
-          Due to the abundance of PCs, most firms would produce trading platforms compatible with only Windows.
-        </p>
-        <p className="fs-5 mb-3">
-          Previously, Mac users who wanted to use advanced trading software on their computers had to rely on virtualization
-          or emulation programs to run Windows.
-        </p>
-        <p className="fs-5 mb-4">
-          This is no longer the case. The world of online trading has now been opened up to Mac users worldwide with powerful,
-          browser-based and native solutions designed for macOS.
-        </p>
-        <p className="fs-5 fw-semibold">
-          If you are a Mac user, AvaTrade invites you to step into the exciting world of online trading and enjoy the many
-          benefits, services, and tools made just for you.
-        </p>
-      </Col>
-    </Row>
-  </Container>
-</div>
-<div style={{ backgroundColor: '#e6f4ea' }} className="text-dark py-5">
-  <Container>
-    <Row className="align-items-center">
-      <Col md={6} className="mb-4 mb-md-0">
-        <h2 className="fw-bold mb-3">MetaTrader 4 Mac</h2>
-        <p className="fs-5">
-          MetaTrader 4 is the world’s most popular trading platform—and for good reason. 
-          Its intuitive interface is beginner-friendly, while offering the power, 
-          speed, and flexibility needed by advanced traders.
-        </p>
-        <ul className="list-unstyled fs-5">
-          <li className="mb-2">
-            <FaChartLine className="text-success me-2" />
-            Trade a wide range of assets with up to 400:1 leverage.
-          </li>
-          <li className="mb-2">
-            <FaClipboardCheck className="text-success me-2" />
-            Full order types including pending orders & trailing stops.
-          </li>
-          <li className="mb-2">
-            <FaChartPie className="text-success me-2" />
-            Choose from 3 chart types and multiple timeframes.
-          </li>
-          <li className="mb-2">
-            <FaRobot className="text-success me-2" />
-            Supports algorithmic trading with full EA (Expert Advisor) compatibility.
-          </li>
-          <li className="mb-2">
-            <FaWrench className="text-success me-2" />
-            30+ built-in indicators and powerful charting tools.
-          </li>
-          <li className="mb-2">
-            <FaBolt className="text-success me-2" />
-            One-click trading with SL/TP directly from the chart.
-          </li>
-          <li className="mb-2">
-            <FaEnvelope className="text-success me-2" />
-            Integrated mailing system and built-in platform help.
-          </li>
-          <li className="mb-2">
-            <FaLock className="text-success me-2" />
-            Full data backup and strong security encryption.
-          </li>
-          <li className="mb-2">
-            <FaPuzzlePiece className="text-success me-2" />
-            Custom indicators, multiple watchlists, and dashboard personalization.
-          </li>
-          <li className="mb-2">
-            <FaSyncAlt className="text-success me-2" />
-            Hedging support and multi-order handling.
-          </li>
-        </ul>
-        <Button variant="success" size="lg" className="fw-semibold mt-3">
-          Start Trading on MT4
-        </Button>
-      </Col>
+      <div style={{ backgroundColor: '#ffffff' }} className="text-dark py-5">
+        <Container>
+          <Row className="align-items-center">
+            <Col md={6} className="mb-4 mb-md-0">
+              <h2 className="fw-bold mb-3" style={{ color: '#1a202c', fontSize: '1.75rem' }}>
+                MetaTrader 4 for Mac
+              </h2>
+              <p className="fs-5" style={{ color: '#4a5568' }}>
+                MetaTrader 4 (MT4) is the industry-standard trading platform, renowned for its intuitive interface and robust functionality. Ideal for both novice and experienced traders, MT4 delivers speed, reliability, and advanced features tailored for macOS.
+              </p>
+              <ul className="list-unstyled fs-5">
+                <li className="mb-3"><FaChartLine className="text-success me-2" /> Trade 250+ assets with up to 400:1 leverage</li>
+                <li className="mb-3"><FaClipboardCheck className="text-success me-2" /> Comprehensive order types, including trailing stops</li>
+                <li className="mb-3"><FaChartPie className="text-success me-2" /> 3 chart types and multiple timeframes</li>
+                <li className="mb-3"><FaRobot className="text-success me-2" /> Full Expert Advisor (EA) support for algorithmic trading</li>
+                <li className="mb-3"><FaWrench className="text-success me-2" /> 30+ indicators and advanced charting tools</li>
+                <li className="mb-3"><FaBolt className="text-success me-2" /> One-click trading with integrated SL/TP</li>
+                <li className="mb-3"><FaLock className="text-success me-2" /> Robust data encryption and backup</li>
+                <li className="mb-3"><FaPuzzlePiece className="text-success me-2" /> Custom indicators and watchlist personalization</li>
+              </ul>
+              <Button
+                style={{ backgroundColor: '#00c37a', borderColor: '#00c37a', fontWeight: 600 }}
+                size="lg"
+                className="mt-3"
+              >
+                Start Trading on MT4
+              </Button>
+            </Col>
+            <Col md={6} className="text-center">
+              <img
+                src="/assets/pipzomarkets-metatrader4-mac.png"
+                alt="MetaTrader 4 Mac"
+                className="img-fluid"
+                style={{
+                  maxHeight: '400px',
+                  borderRadius: '0.75rem',
+                  boxShadow: '0 8px 24px rgba(0, 0, 0, 0.15)',
+                }}
+              />
+            </Col>
+          </Row>
+        </Container>
+      </div>
 
-      <Col md={6} className="text-center">
-        <img
-          src="/assets/metatrader4-mac.png"
-          alt="MetaTrader 4 Mac"
-          className="img-fluid"
-          style={{
-            maxHeight: '400px',
-            borderRadius: '12px',
-            boxShadow: '0 0 10px rgba(0,0,0,0.1)',
-          }}
-        />
-      </Col>
-    </Row>
-  </Container>
-</div>
+      <div style={{ backgroundColor: '#f8fafc' }} className="text-dark py-5">
+        <Container>
+          <Row className="align-items-center">
+            <Col md={6} className="mb-4 mb-md-0 order-md-2">
+              <h2 className="fw-bold mb-3" style={{ color: '#1a202c', fontSize: '1.75rem' }}>
+                MetaTrader 5 for Mac
+              </h2>
+              <p className="fs-5" style={{ color: '#4a5568' }}>
+                MetaTrader 5 (MT5) builds on MT4’s legacy, offering enhanced speed, advanced tools, and greater flexibility. Perfect for traders seeking a powerful, macOS-native platform with expanded charting and asset options.
+              </p>
+              <ul className="list-unstyled fs-5">
+                <li className="mb-3"><FaChartBar className="text-success me-2" /> Diverse assets with high leverage</li>
+                <li className="mb-3"><FaClipboardList className="text-success me-2" /> Full order types, including pending orders</li>
+                <li className="mb-3"><FaLayerGroup className="text-success me-2" /> 38 indicators, 44 tools, 21 timeframes</li>
+                <li className="mb-3"><FaCogs className="text-success me-2" /> One-click trading with SL/TP integration</li>
+                <li className="mb-3"><FaRobot className="text-success me-2" /> MQL5 for custom EAs, robots, and scripts</li>
+                <li className="mb-3"><FaCalendarAlt className="text-success me-2" /> Economic Calendar and Depth of Market</li>
+                <li className="mb-3"><FaLayerGroup className="text-success me-2" /> Unlimited charts and customizable dashboards</li>
+              </ul>
+              <Button
+                style={{ backgroundColor: '#00c37a', borderColor: '#00c37a', fontWeight: 600 }}
+                size="lg"
+                className="mt-3"
+              >
+                Start Trading on MT5
+              </Button>
+            </Col>
+            <Col md={6} className="text-center order-md-1">
+              <img
+                src="/assets/pipzomarkets-metatrader5-mac.png"
+                alt="MetaTrader 5 Mac"
+                className="img-fluid"
+                style={{
+                  maxHeight: '400px',
+                  borderRadius: '0.75rem',
+                  boxShadow: '0 8px 24px rgba(0, 0, 0, 0.15)',
+                }}
+              />
+            </Col>
+          </Row>
+        </Container>
+      </div>
 
-<div style={{ backgroundColor: '#e6f4ea' }} className="text-dark py-5">
-  <Container>
-    <Row className="align-items-center">
-      <Col md={6} className="mb-4 mb-md-0">
-        <h2 className="fw-bold mb-3">MetaTrader 5 Mac</h2>
-        <p className="fs-5">
-          MetaTrader 5 is an evolved version of the popular MT4 platform by MetaQuotes.
-          MT5 is faster, smarter, and offers a seamless trading experience with more tools,
-          assets, and charting flexibility—ideal for both beginner and pro traders.
-        </p>
-        <ul className="list-unstyled fs-5">
-          <li className="mb-2">
-            <FaChartBar className="text-success me-2" />
-            Trade a wide range of assets with high leverage and diversified instruments.
-          </li>
-          <li className="mb-2">
-            <FaClipboardList className="text-success me-2" />
-            Full range of order types, including pending orders & trailing stops.
-          </li>
-          <li className="mb-2">
-            <FaLayerGroup className="text-success me-2" />
-            38 indicators, 44 analytical tools, and 21 timeframes for powerful charting.
-          </li>
-          <li className="mb-2">
-            <FaCogs className="text-success me-2" />
-            One-click trading with integrated SL/TP on charts.
-          </li>
-          <li className="mb-2">
-            <FaRobot className="text-success me-2" />
-            Program custom strategies using MQL5 – for EAs, robots & scripts.
-          </li>
-          <li className="mb-2">
-            <FaCalendarAlt className="text-success me-2" />
-            Live Economic Calendar & Depth of Market (DOM) for better decision-making.
-          </li>
-          <li className="mb-2">
-            <FaLayerGroup className="text-success me-2" />
-            Open unlimited charts and enjoy full dashboard customization with watchlists.
-          </li>
-        </ul>
-        <Button variant="success" size="lg" className="fw-semibold mt-3">
-          Start Trading on MT5
-        </Button>
-      </Col>
+      <div style={{ backgroundColor: '#ffffff' }} className="text-dark py-5">
+        <Container>
+          <Row className="align-items-center">
+            <Col md={6} className="mb-4 mb-md-0">
+              <h2 className="fw-bold mb-4" style={{ color: '#1a202c', fontSize: '1.75rem' }}>
+                Installing Custom Tools on Mac
+              </h2>
+              <p className="fs-5 mb-4" style={{ color: '#4a5568' }}>
+                Enhance your trading with custom Expert Advisors (EAs), indicators, and scripts using MQL4 or MQL5 on PipzoMarkets’ MT4 and MT5 platforms for Mac.
+              </p>
+              <ul className="fs-6 list-unstyled">
+                <li className="mb-3"><FaApple className="text-success me-2" /> Open <strong>Finder</strong> on your Mac.</li>
+                <li className="mb-3"><FaFolderOpen className="text-success me-2" /> Navigate to the <strong>Applications</strong> folder.</li>
+                <li className="mb-3"><FaApple className="text-success me-2" /> Locate the <strong>PipzoMarkets MT4 or MT5</strong> app.</li>
+                <li className="mb-3"><FaCogs className="text-success me-2" /> Right-click and select <strong>“Show Package Contents”</strong>.</li>
+                <li className="mb-3"><FaFolderOpen className="text-success me-2" /> Go to: <br /><code style={{ color: '#4a5568' }}>Drive C → Program Files → PipzoMarkets MT4 or MT5 → Experts</code></li>
+                <li className="mb-3"><FaCogs className="text-success me-2" /> Restart PipzoMarkets MT4/MT5 to load your tools.</li>
+              </ul>
+            </Col>
+            <Col md={6} className="text-center">
+              <img
+                src="/assets/pipzomarkets-install-expert-mac.png"
+                alt="Install Custom Tools on Mac"
+                className="img-fluid"
+                style={{
+                  maxHeight: '400px',
+                  borderRadius: '0.75rem',
+                  boxShadow: '0 8px 24px rgba(0, 0, 0, 0.15)',
+                }}
+              />
+            </Col>
+          </Row>
+        </Container>
+      </div>
 
-      <Col md={6} className="text-center">
-        <img
-          src="/assets/metatrader5-mac.png"
-          alt="MetaTrader 5 Mac"
-          className="img-fluid"
-          style={{
-            maxHeight: '400px',
-            borderRadius: '12px',
-            boxShadow: '0 0 10px rgba(0,0,0,0.1)',
-          }}
-        />
-      </Col>
-    </Row>
-  </Container>
-</div>
-
-
-
-<div style={{ backgroundColor: '#f0fbf5' }} className="text-dark py-5">
-  <Container>
-    <Row className="align-items-center">
-      {/* Left side: Instructions */}
-      <Col md={6} className="mb-4 mb-md-0">
-        <h2 className="fw-bold mb-4">How to Install Expert Advisors, Custom Indicators or Scripts</h2>
-        <p className="fs-5 mb-4">
-          AvaTrade MT4 and MT5 allow integration of custom tools to enhance your trading—such as Expert Advisors (EAs), Indicators, and Scripts using MQL4 or MQL5.
-        </p>
-
-        <ul className="fs-6 list-unstyled">
-          <li className="mb-3">
-            <FaApple className="text-success me-2" />
-            Open <strong>Finder</strong> on your Mac.
-          </li>
-          <li className="mb-3">
-            <FaFolderOpen className="text-success me-2" />
-            Go to the <strong>Applications</strong> folder.
-          </li>
-          <li className="mb-3">
-            <FaApple className="text-success me-2" />
-            Find the <strong>AvaTrade Mac MT4 or MT5</strong> app.
-          </li>
-          <li className="mb-3">
-            <FaCogs className="text-success me-2" />
-            Right-click it and choose <strong>“Show Package Contents”</strong>.
-          </li>
-          <li className="mb-3">
-            <FaFolderOpen className="text-success me-2" />
-            Navigate to: <br />
-            <code className="text-muted">Drive C → Program Files → AvaTrade MT4 or MT5 → Experts</code>
-          </li>
-          <li className="mb-3">
-            <FaCogs className="text-success me-2" />
-            Restart AvaTrade MT4/MT5 to detect your tools.
-          </li>
-        </ul>
-      </Col>
-
-      {/* Right side: Image or Illustration */}
-      <Col md={6} className="text-center">
-        <img
-          src="/assets/install-expert-mac.png"
-          alt="Install on Mac"
-          className="img-fluid"
-          style={{
-            maxHeight: '400px',
-            borderRadius: '12px',
-            boxShadow: '0 0 10px rgba(0,0,0,0.1)',
-          }}
-        />
-      </Col>
-    </Row>
-  </Container>
-</div>
-<div style={{ backgroundColor: '#e8fcee' }} className="text-dark py-5">
-  <Container>
-    <Row className="align-items-center">
-      {/* Left Column: Instructions */}
-      <Col md={6}>
-        <h2 className="fw-bold mb-4" style={{ color: '#145214' }}>
-          Sign up today and get immediate access to AvaTrade’s MetaTrader 4 or 5 for Mac
-        </h2>
-        <p className="fs-5 mb-4">
-          Installing the AvaTrade MetaTrader 4 or MetaTrader 5 on your Mac OS is simple. In just a few easy steps, you'll be ready to start trading.
-        </p>
-        <h5 className="fw-semibold text-success mb-3">
-          How to install AvaTrade MetaTrader 4 or 5 on your Mac?
-        </h5>
-
-        <ul className="fs-6 list-unstyled">
-          {[
-            { text: 'Click to download the AvaTrade MT4 Terminal (.dmg) file.', icon: <FaDownload className="text-success me-2 mt-1" /> },
-            { text: 'Click to download the AvaTrade MT5 Terminal (.dmg) file.', icon: <FaDownload className="text-success me-2 mt-1" /> },
-            { text: 'Open the AvaTrade.dmg file after it has downloaded.', icon: <FaFileAlt className="text-success me-2 mt-1" /> },
-            { text: 'Drag the AvaTrade application to your Applications Folder.', icon: <FaFolderOpen className="text-success me-2 mt-1" /> },
-            { text: 'Right-click the AvaTrade Mac MT4/MT5 app and select “Open”. Installation will begin automatically.', icon: <FaMousePointer className="text-success me-2 mt-1" /> },
-            { text: 'When launching for the first time, enter your demo or real account login details.', icon: <FaSignInAlt className="text-success me-2 mt-1" /> },
-            { text: 'To place an order, press “F9” or “FN”.', icon: <FaKeyboard className="text-success me-2 mt-1" /> },
-            { text: 'To enable one-click trading: Extras > Options > Trading > One Click Trading > Tick the box.', icon: <FaCogs className="text-success me-2 mt-1" /> },
-          ].map((item, index) => (
-            <li key={index} className="d-flex align-items-start mb-2">
-              {item.icon}
-              <span>{item.text}</span>
-            </li>
-          ))}
-        </ul>
-
-        <Button variant="success" size="lg" className="mt-4 fw-semibold px-4">
-          Download for Mac Now
-        </Button>
-      </Col>
-
-      {/* Right Column: Image */}
-      <Col md={6} className="text-center mt-4 mt-md-0">
-        <img
-          src="/assets/download-mac-guide.png"
-          alt="Download MetaTrader Mac"
-          className="img-fluid"
-          style={{
-            maxHeight: '420px',
-            borderRadius: '12px',
-            boxShadow: '0 0 10px rgba(0,0,0,0.1)',
-          }}
-        />
-      </Col>
-    </Row>
-  </Container>
-</div>
-
-
+      <div style={{ backgroundColor: '#f8fafc' }} className="text-dark py-5">
+        <Container>
+          <Row className="align-items-center">
+            <Col md={6}>
+              <h2 className="fw-bold mb-4" style={{ color: '#1a202c', fontSize: '1.75rem' }}>
+                Get Started with PipzoMarkets on Mac
+              </h2>
+              <p className="fs-5 mb-4" style={{ color: '#4a5568' }}>
+                Installing PipzoMarkets’ MetaTrader 4 or 5 on your Mac is straightforward. Follow these steps to access our powerful trading platforms and start trading in minutes.
+              </p>
+              <h5 className="fw-semibold mb-3" style={{ color: '#00c37a' }}>
+                How to Install MetaTrader 4 or 5 on macOS
+              </h5>
+              <ul className="fs-6 list-unstyled">
+                {[
+                  { text: 'Download the PipzoMarkets MT4 Terminal (.dmg) file.', icon: <FaDownload className="text-success me-2 mt-1" /> },
+                  { text: 'Download the PipzoMarkets MT5 Terminal (.dmg) file.', icon: <FaDownload className="text-success me-2 mt-1" /> },
+                  { text: 'Open the PipzoMarkets.dmg file after downloading.', icon: <FaFileAlt className="text-success me-2 mt-1" /> },
+                  { text: 'Drag the PipzoMarkets application to your Applications Folder.', icon: <FaFolderOpen className="text-success me-2 mt-1" /> },
+                  { text: 'Right-click the PipzoMarkets MT4/MT5 app and select “Open”.', icon: <FaMousePointer className="text-success me-2 mt-1" /> },
+                  { text: 'Enter your demo or real account login details on first launch.', icon: <FaSignInAlt className="text-success me-2 mt-1" /> },
+                  { text: 'Press “F9” or “FN” to place an order.', icon: <FaKeyboard className="text-success me-2 mt-1" /> },
+                  { text: 'Enable one-click trading: Extras > Options > Trading > One Click Trading.', icon: <FaCogs className="text-success me-2 mt-1" /> },
+                ].map((item, index) => (
+                  <li key={index} className="d-flex align-items-start mb-2">
+                    {item.icon}
+                    <span>{item.text}</span>
+                  </li>
+                ))}
+              </ul>
+              <Button
+                style={{ backgroundColor: '#00c37a', borderColor: '#00c37a', fontWeight: 600 }}
+                size="lg"
+                className="mt-4"
+              >
+                Download for Mac Now
+              </Button>
+            </Col>
+            <Col md={6} className="text-center mt-4 mt-md-0">
+              <img
+                src="/assets/pipzomarkets-download-mac-guide.png"
+                alt="Download MetaTrader Mac"
+                className="img-fluid"
+                style={{
+                  maxHeight: '420px',
+                  borderRadius: '0.75rem',
+                  boxShadow: '0 8px 24px rgba(0, 0, 0, 0.15)',
+                }}
+              />
+            </Col>
+          </Row>
+        </Container>
+      </div>
     </>
   );
 };
 
-export default MacTrading;
+export default PipzoMarketsMacTrading;

@@ -7,6 +7,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { AdvancedChart } from 'react-tradingview-embed';
 import axios from 'axios';
+import { INSTRUMENTS } from '../pages/TradingInfo/instrumentsConfig';
 
 // Define interface for useAuth return value (adjust based on your actual useAuth implementation)
 interface AuthContextType {
@@ -46,8 +47,9 @@ const NumberInput: React.FC<NumberInputProps> = ({ amount, setAmount }) => {
 
 const TradingDashboard: React.FC = () => {
   const location = useLocation();
-  const [selectedCategory, setSelectedCategory] = useState<string>("Forex Majors");
-  const [selectedInstrument, setSelectedInstrument] = useState<string | null>(null); // OANDA symbol e.g., EUR_USD
+  const [selectedCategory, setSelectedCategory] = useState<string>("Forex");
+  // selectedInstrument stores OANDA symbol when available; otherwise uses slug as fallback
+  const [selectedInstrument, setSelectedInstrument] = useState<string | null>(null);
   const [orderType, setOrderType] = useState<'buy' | 'sell'>('buy');
   const [amount, setAmount] = useState<number>(100);
   const [leverage, setLeverage] = useState<number>(1);
@@ -75,10 +77,13 @@ const TradingDashboard: React.FC = () => {
     return () => clearInterval(intervalId);
   }, []);
 
-  interface Instrument {
-    name: string; // Display name e.g., EUR/USD
-    symbol: string; // OANDA symbol e.g., EUR_USD
-  }
+  type DashboardInstrument = {
+    name: string;
+    slug: string;
+    tv: string; // TradingView symbol
+    symbol?: string; // OANDA symbol if tradable
+    canTrade: boolean;
+  };
 
   type PriceTick = {
     type: string;
@@ -88,19 +93,45 @@ const TradingDashboard: React.FC = () => {
     time?: string;
   };
 
-  // live prices map: symbol -> { bid, ask, base }
+  // live prices map: OANDA symbol -> { bid, ask, base }
   const [prices, setPrices] = useState<Record<string, { bid: number; ask: number; base: number; time?: string }>>({});
 
-  const allInstruments: Record<string, Instrument[]> = {
-    "Forex Majors": [
-      { name: "EUR/USD", symbol: "EUR_USD" },
-      { name: "GBP/USD", symbol: "GBP_USD" },
-      { name: "USD/JPY", symbol: "USD_JPY" },
-      { name: "USD/CHF", symbol: "USD_CHF" },
-      { name: "AUD/USD", symbol: "AUD_USD" },
-      { name: "USD/CAD", symbol: "USD_CAD" }
-    ]
-  };
+  // Build dashboard categories from centralized INSTRUMENTS config
+  const allInstruments: Record<string, DashboardInstrument[]> = useMemo(() => {
+    const groups: Record<string, DashboardInstrument[]> = {
+      Indices: [],
+      Commodities: [],
+      Stocks: [],
+      Forex: [],
+      Options: [],
+    };
+    INSTRUMENTS.forEach(i => {
+      const cat =
+        i.category === 'indices' ? 'Indices' :
+        i.category === 'commodities' ? 'Commodities' :
+        i.category === 'stocks' ? 'Stocks' :
+        i.category === 'forex' ? 'Forex' :
+        'Options';
+      groups[cat].push({
+        name: i.title,
+        slug: i.slug,
+        tv: i.tradingViewSymbol,
+        symbol: i.oandaSymbol,
+        canTrade: Boolean(i.oandaSymbol),
+      });
+    });
+    return groups;
+  }, []);
+
+  const flatInstruments: DashboardInstrument[] = useMemo(
+    () => Object.values(allInstruments).flat(),
+    [allInstruments]
+  );
+
+  const selectedItem: DashboardInstrument | undefined = useMemo(() => {
+    if (!selectedInstrument) return undefined;
+    return flatInstruments.find(i => i.symbol === selectedInstrument || i.slug === selectedInstrument);
+  }, [selectedInstrument, flatInstruments]);
 
   // Initialize instrument and side from URL query params if provided
   useEffect(() => {
@@ -109,19 +140,17 @@ const TradingDashboard: React.FC = () => {
     const side = params.get('side');
     if (side === 'buy' || side === 'sell') setOrderType(side);
     if (instr) {
-      // validate against known instruments
+      // validate against known instruments (prefer OANDA symbols)
       const all = Object.values(allInstruments).flat();
-      const exists = all.find(i => i.symbol === instr || i.name === instr);
-      if (exists) {
-        setSelectedInstrument(exists.symbol);
-      }
+      const exists = all.find(i => i.symbol === instr);
+      if (exists) setSelectedInstrument(instr);
     }
   }, [location.search]);
 
-  // Start SSE stream for all instruments in the active category
+  // Start SSE stream for tradable instruments (with OANDA symbol) in the active category
   useEffect(() => {
     const list = allInstruments[selectedCategory] || [];
-    const symbols = Array.from(new Set(list.map(i => i.symbol)));
+    const symbols = Array.from(new Set(list.map(i => i.symbol).filter(Boolean))) as string[];
     if (symbols.length === 0) return;
 
     const tokenParam = token ? `&token=${encodeURIComponent(token)}` : '';
@@ -157,8 +186,13 @@ const TradingDashboard: React.FC = () => {
       return;
     }
 
-    if (!selectedInstrument) {
+    if (!selectedInstrument || !selectedItem) {
       toast.error("Please select an instrument");
+      return;
+    }
+
+    if (!selectedItem.symbol) {
+      toast.error("Trading not enabled for this instrument");
       return;
     }
 
@@ -169,7 +203,7 @@ const TradingDashboard: React.FC = () => {
 
     try {
       setIsLoading(true);
-      const instrument = allInstruments[selectedCategory]?.find(i => i.name === selectedInstrument || i.symbol === selectedInstrument);
+      const instrument = selectedItem;
       if (!instrument) {
         toast.error("Instrument not found");
         return;
@@ -265,8 +299,8 @@ const TradingDashboard: React.FC = () => {
                 </tr>
               </thead>
               <tbody>
-                {allInstruments[selectedCategory]?.map((item, i) => {
-                  const p = prices[item.symbol];
+                 {allInstruments[selectedCategory]?.map((item, i) => {
+                  const p = item.symbol ? prices[item.symbol] : undefined;
                   const mid = (p && Number.isFinite(p.bid) && Number.isFinite(p.ask)) ? (p.bid + p.ask) / 2 : undefined;
                   const changePct = (p && mid !== undefined && Number.isFinite(p.base) && p.base !== 0)
                     ? (((mid - p.base) / p.base) * 100)
@@ -275,20 +309,20 @@ const TradingDashboard: React.FC = () => {
                   <tr
                     key={i}
                     style={{
-                      backgroundColor: selectedInstrument === item.name || selectedInstrument === item.symbol
+                      backgroundColor: selectedInstrument === item.symbol || selectedInstrument === item.slug
                         ? "rgba(0, 191, 166, 0.2)" 
                         : "rgba(255,255,255,0.02)",
                       transition: "0.2s ease",
                       cursor: "pointer",
                     }}
-                    onClick={() => setSelectedInstrument(item.symbol)}
+                    onClick={() => setSelectedInstrument(item.symbol || item.slug)}
                     onMouseEnter={(e) =>
-                      (e.currentTarget.style.backgroundColor = selectedInstrument === item.name || selectedInstrument === item.symbol
+                      (e.currentTarget.style.backgroundColor = selectedInstrument === item.symbol || selectedInstrument === item.slug
                         ? "rgba(0, 191, 166, 0.2)" 
                         : "rgba(0, 191, 166, 0.1)")
                     }
                     onMouseLeave={(e) =>
-                      (e.currentTarget.style.backgroundColor = selectedInstrument === item.name || selectedInstrument === item.symbol
+                      (e.currentTarget.style.backgroundColor = selectedInstrument === item.symbol || selectedInstrument === item.slug
                         ? "rgba(0, 191, 166, 0.2)" 
                         : "rgba(255,255,255,0.02)")
                     }
@@ -302,23 +336,27 @@ const TradingDashboard: React.FC = () => {
                     <td>
                       <button 
                         className="btn btn-sm btn-outline-success me-1"
+                        disabled={!item.canTrade}
                         onClick={(e) => {
                           e.stopPropagation();
+                          if (!item.canTrade || !item.symbol) return;
                           setSelectedInstrument(item.symbol);
                           setOrderType('buy');
                         }}
-                        aria-label={`Buy ${item.symbol}`}
+                        aria-label={`Buy ${item.name}`}
                       >
                         Buy
                       </button>
                       <button 
                         className="btn btn-sm btn-outline-danger"
+                        disabled={!item.canTrade}
                         onClick={(e) => {
                           e.stopPropagation();
+                          if (!item.canTrade || !item.symbol) return;
                           setSelectedInstrument(item.symbol);
                           setOrderType('sell');
                         }}
-                        aria-label={`Sell ${item.symbol}`}
+                        aria-label={`Sell ${item.name}`}
                       >
                         Sell
                       </button>
@@ -333,7 +371,7 @@ const TradingDashboard: React.FC = () => {
             </table>
           </div>
 
-          {selectedInstrument && (
+          {selectedInstrument && selectedItem && (
             <div className="row">
               <div className="col-md-8">
                 <div 
@@ -346,9 +384,7 @@ const TradingDashboard: React.FC = () => {
                 >
                   <AdvancedChart
                     widgetProps={{
-                      symbol: selectedInstrument.includes('_') 
-                        ? `FX:${selectedInstrument.replace('_', '')}` 
-                        : `FX:${selectedInstrument.replace('/', '')}`,
+                      symbol: selectedItem.tv,
                       theme: 'dark',
                       style: '1',
                       locale: 'en',
@@ -369,7 +405,7 @@ const TradingDashboard: React.FC = () => {
                     border: "1px solid rgba(255,255,255,0.1)",
                   }}
                 >
-                  <h5 className="mb-3">Place Order: {selectedInstrument}</h5>
+                  <h5 className="mb-3">Place Order: {selectedItem.name}</h5>
 
                   <div className="mb-3">
                     <div className="btn-group w-100">
@@ -445,8 +481,8 @@ const TradingDashboard: React.FC = () => {
                   <button 
                     className={`btn btn-${orderType === 'buy' ? 'success' : 'danger'} w-100`}
                     onClick={handleTrade}
-                    disabled={isLoading}
-                    aria-label={`Place ${orderType} order for ${selectedInstrument}`}
+                    disabled={isLoading || !selectedItem.canTrade}
+                    aria-label={`Place ${orderType} order for ${selectedItem.name}`}
                   >
                     {isLoading ? (
                       <span>
@@ -454,7 +490,7 @@ const TradingDashboard: React.FC = () => {
                         Processing...
                       </span>
                     ) : (
-                      `${orderType === 'buy' ? 'Buy' : 'Sell'} ${selectedInstrument}`
+                      `${orderType === 'buy' ? 'Buy' : 'Sell'} ${selectedItem.name}`
                     )}
                   </button>
                 </div>

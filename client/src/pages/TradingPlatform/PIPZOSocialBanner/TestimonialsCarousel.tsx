@@ -1,20 +1,21 @@
+
 import React from 'react';
 import { Carousel, Container, Card } from 'react-bootstrap';
 
 const testimonials = [
   {
     quote:
-      "The AvaSocial platform has transformed my trading experience. As a beginner, I was unsure where to start, but AvaSocial allowed me to follow experienced traders and learn from their strategies. I've seen consistent growth in my portfolio.",
+      "The PipzoMarkets platform has transformed my trading experience. As a beginner, I was unsure where to start, but PipzoMarkets allowed me to follow experienced traders and learn from their strategies. I've seen consistent growth in my portfolio.",
     name: 'Sarah H.',
   },
   {
     quote:
-      "I've been trading for years but have found it hard to diversify as I don’t have the time or knowledge to follow too many markets. AvaSocial has simplified everything. I can diversify my investments effortlessly by following top traders.",
+      "I've been trading for years but have found it hard to diversify as I don’t have the time or knowledge to follow too many markets. PipzoMarkets has simplified everything. I can diversify my investments effortlessly by following top traders.",
     name: 'David T.',
   },
   {
     quote:
-      "AvaSocial has made trading a social experience for me. I enjoy connecting with fellow traders, discussing strategies, and learning from each other. It's not just about copying; it's about growing together as a community.",
+      "PipzoMarkets has made trading a social experience for me. I enjoy connecting with fellow traders, discussing strategies, and learning from each other. It's not just about copying; it's about growing together as a community.",
     name: 'Maria S.',
   },
   {
@@ -24,12 +25,12 @@ const testimonials = [
   },
   {
     quote:
-      "I love how easy it is to track expert performance and see real-time results. Pipzo has taken the stress out of my investments.",
+      "I love how easy it is to track expert performance and see real-time results. PipzoMarkets has taken the stress out of my investments.",
     name: 'Junaid A.',
   },
   {
     quote:
-      "Following multiple experts across different assets helped me diversify like never before. Pipzo is exactly what I needed.",
+      "Following multiple experts across different assets helped me diversify like never before. PipzoMarkets is exactly what I needed.",
     name: 'Neha R.',
   },
   {
@@ -39,12 +40,12 @@ const testimonials = [
   },
   {
     quote:
-      "Being able to connect and discuss strategies makes Pipzo more than a trading app — it’s a hub for smart investors.",
+      "Being able to connect and discuss strategies makes PipzoMarkets more than a trading app — it’s a hub for smart investors.",
     name: 'Priya S.',
   },
   {
     quote:
-      "Started as a beginner, now I confidently manage my portfolio. Credit goes to Pipzo’s social trading experience.",
+      "Started as a beginner, now I confidently manage my portfolio. Credit goes to PipzoMarkets’ social trading experience.",
     name: 'Rahul V.',
   },
   {
@@ -62,7 +63,7 @@ const TestimonialsCarousel: React.FC = () => {
           className="text-center mb-5"
           style={{ fontWeight: 700, fontSize: '2.5rem', color: '#146c43' }}
         >
-          People Say the <span style={{ color: '#28a745' }}>Nicest Things</span>
+          People Say the <span style={{ color: '#28a745' }}>Nicest Things</span> About PipzoMarkets
         </h2>
 
         <Carousel indicators={false} controls={false} interval={4000} pause={false} fade>

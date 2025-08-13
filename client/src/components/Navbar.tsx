@@ -354,10 +354,10 @@ useEffect(() => {
                         WebTrader
                       </a>
                       <a className="dropdown-item" href="AvaOptions">
-                        AvaOptions
+                        PipzoOptions
                       </a>
                       <a className="dropdown-item" href="PipzoTradeApp">
-                        AvaTrade App
+                        PIPZOMARKETS App
                       </a>
                       <a className="dropdown-item" href="MacTrading">
                         Mac Trading
@@ -693,36 +693,7 @@ useEffect(() => {
                 </div>
               </li>
 
-              <li className="nav-item dropdown hover-dropdown position-static">
-                <a
-                  className="nav-link dropdown-toggle text-dark fw-semibold"
-                  href="#"
-                  role="button"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
-                >
-                  Partners
-                </a>
-
-                <div
-                  className="dropdown-menu mega-menu p-4 shadow-lg w-100 border-0 rounded-0 m-0"
-                  style={{ backgroundColor: '#e6fff2', left: 0, right: 0, top: '100%', transform: 'none' }}
-                >
-                  <div className="row g-4">
-                    <div className="col-md-3">
-                      <a className="dropdown-item" href="#">
-                        Partners Type
-                      </a>
-                      <a className="dropdown-item" href="#">
-                        AvaPartner Blog
-                      </a>
-                      <a className="dropdown-item" href="#">
-                        Become a Partner
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </li>
+            
 
               <li className="nav-item dropdown hover-dropdown position-static">
                 <a

@@ -1,348 +1,330 @@
 import React from 'react';
-import { Container, Row, Col, Button, Accordion } from 'react-bootstrap';
-import { FaBalanceScale, FaBell, FaChartLine, FaCheckCircle, FaExclamationTriangle, FaEye, FaQuestionCircle, FaShieldAlt, FaTrophy, FaUserCog, FaUserShield } from 'react-icons/fa';
+import { Container, Row, Col, Button } from 'react-bootstrap';
+import { FaBolt, FaCalendarAlt, FaChartBar, FaChartLine, FaChartPie, FaClipboardCheck, FaClipboardList, FaCogs, FaDownload, FaFileAlt,  FaLayerGroup, FaLock, FaMousePointer, FaPuzzlePiece, FaRobot, FaSignInAlt, FaWrench } from 'react-icons/fa';
 
-const TradeMT5: React.FC = () => {
+const PipzoMarketsHowToTradeMT5: React.FC = () => {
   return (
     <>
-    <div style={{ backgroundColor: '#014421' }} className="text-white py-5">
-    <Container className="text-center">
-      <Row className="justify-content-center">
-        <Col lg={10}>
-          <h2 className="fw-bold mb-3">Guardian Angel</h2>
-          <h5 className="text-warning mb-3">Make Smarter Trades with Real-Time Insights</h5>
-          <p className="mb-4 fs-5">
-            AvaTrade’s free Guardian Angel trading support system acts as a smart decision enhancer for MetaTrader 4 and 5.
-            It gives instant feedback on your trades to help you refine your strategy, improve your trading skills,
-            and focus on the most important data to grow your success.
-          </p>
-          <Button variant="light" size="lg" className="fw-semibold text-dark">
-            Activate Guardian Angel
-          </Button>
-        </Col>
-      </Row>
+      <div style={{ background: 'linear-gradient(135deg, #014421 0%, #1a5e34 100%)' }} className="text-white py-5">
+        <Container className="text-center">
+          <Row className="justify-content-center">
+            <Col lg={10}>
+              <h2 className="fw-bold mb-3" style={{ fontSize: '2.5rem', color: '#ffffff' }}>
+                How to Trade with MetaTrader 5 on PipzoMarkets
+              </h2>
+              <h5 className="mb-4" style={{ color: '#ffd700', fontWeight: 500 }}>
+                Comprehensive Guide for Beginners and Advanced Traders
+              </h5>
+              <p className="fs-5 mb-4" style={{ color: '#e0e0e0' }}>
+                MetaTrader 5 (MT5) is a powerful trading platform offered by PipzoMarkets, providing access to over 250 financial instruments including forex, commodities, cryptocurrencies, and equities. With advanced charting, automated trading via Expert Advisors (EAs), and high leverage up to 400:1, MT5 empowers traders in the United Kingdom to execute strategies efficiently.
+              </p>
+              <p className="fs-5 fw-semibold mb-4" style={{ color: '#ffffff' }}>
+                Master MT5 with <span style={{ color: '#ffd700' }}>seamless tools and real-time data</span> for optimal trading performance.
+              </p>
+              <div className="d-flex justify-content-center gap-3 flex-wrap">
+                <Button
+                  style={{ backgroundColor: '#00c37a', borderColor: '#00c37a', fontWeight: 600, padding: '0.75rem 2rem' }}
+                  size="lg"
+                >
+                  Download MT5 Now
+                </Button>
+                <Button
+                  variant="outline-light"
+                  size="lg"
+                  style={{ fontWeight: 600, padding: '0.75rem 2rem' }}
+                >
+                  Open Demo Account
+                </Button>
+              </div>
+            </Col>
+          </Row>
+          <Row className="mt-5">
+            <Col>
+              <img
+                src="/assets/pipzomarkets-mt5-trading.png"
+                alt="PipzoMarkets MT5 Trading"
+                className="img-fluid w-100"
+                style={{
+                  borderRadius: '0.75rem',
+                  boxShadow: '0 8px 24px rgba(0, 0, 0, 0.2)',
+                  maxHeight: '450px',
+                  objectFit: 'cover',
+                }}
+              />
+            </Col>
+          </Row>
+        </Container>
+      </div>
 
-      <Row className="mt-5">
-        <Col>
-          <img
-           src=""
-            alt="Guardian Angel System"
-            className="img-fluid w-100"
-            style={{ height: 'auto' }}
-          />
-        </Col>
-      </Row>
-    </Container>
+      <div style={{ backgroundColor: '#f8fafc' }} className="text-dark py-5">
+        <Container>
+          <Row className="justify-content-center">
+            <Col lg={10}>
+              <h2 className="fw-bold mb-4" style={{ color: '#1a202c', fontSize: '2rem' }}>
+                Getting Started with MetaTrader 5
+              </h2>
+              <p className="fs-5 mb-3" style={{ color: '#4a5568' }}>
+                MetaTrader 5 is an advanced multi-asset trading platform that builds on MT4's features, offering enhanced speed, more timeframes, and better tools for analysis. To begin, download MT5 from PipzoMarkets and set up your account.
+              </p>
+              <p className="fs-5 mb-3" style={{ color: '#4a5568' }}>
+                Choose between a demo account for practice or a real account for live trading. PipzoMarkets supports seamless integration with MT5 for macOS, Windows, iOS, and Android.
+              </p>
+              <p className="fs-5 fw-semibold" style={{ color: '#1a202c' }}>
+                Join PipzoMarkets today and experience MT5's full potential with competitive spreads and expert support.
+              </p>
+            </Col>
+          </Row>
+        </Container>
+      </div>
 
-
-  </div>
-
-  <div style={{ backgroundColor: '#e6f4ea' }} className="py-5 text-dark">
-      <Container>
-        <Row className="align-items-center">
-          {/* Text Left */}
-          <Col md={6}>
-            <h2 className="fw-bold mb-4" style={{ color: '#145214' }}>
-              Guardian Angel Benefits
-            </h2>
-            <p className="fs-5 mb-4">
-              This personalised trading and money management tool is designed to:
-            </p>
-            <ul className="fs-5 list-unstyled">
-              <li className="mb-3"><FaCheckCircle className="text-success me-2" />Help you stay focused on your strategy</li>
-              <li className="mb-3"><FaCheckCircle className="text-success me-2" />Help you identify your mistakes</li>
-              <li className="mb-3"><FaCheckCircle className="text-success me-2" />Promote trading confidence</li>
-              <li className="mb-3"><FaCheckCircle className="text-success me-2" />Strengthen your connection to the markets</li>
-              <li className="mb-3"><FaCheckCircle className="text-success me-2" />Increase your trading knowledge</li>
-            </ul>
-          </Col>
-
-          {/* Image Right */}
-          <Col md={6} className="text-center mt-4 mt-md-0">
-            <img
-              src="/assets/guardian-benefits.png" // 🔁 Replace with your actual image path
-              alt="Guardian Angel Features"
-              className="img-fluid"
-              style={{
-                maxHeight: '400px',
-                borderRadius: '12px',
-                boxShadow: '0 0 10px rgba(0,0,0,0.1)',
-              }}
-            />
-          </Col>
-        </Row>
-      </Container>
-    </div>
-    <div style={{ backgroundColor: '#f5fff9' }} className="text-dark py-5">
-      <Container>
-        <Row className="justify-content-center">
-          <Col lg={10}>
-            
-            <p className="fs-5 mb-4 text-center">
-              The Guardian Angel tool is useful for new traders and experienced ones alike,
-              providing an external and objective review on their trades. This feedback contributes
-              not only to current trades but helps shape better trading habits for the future—
-              because learning from mistakes is an integral part of trading.
-            </p>
-            <p className="fs-5 text-center">
-              We view trading as a continuous process. As beginners take their first steps,
-              they should constantly enhance their trading abilities. Even for seasoned traders,
-              there's always room to grow. At AvaTrade, we recognize that potential and are committed
-              to equipping our clients with the best tools in the market. Guardian Angel is one of those tools,
-              which is why we provide it at the highest level possible.
-            </p>
-          </Col>
-        </Row>
-      </Container>
-    </div>
-    <div style={{ backgroundColor: '#e6f4ea' }} className="text-dark py-5">
-      <Container>
-        <Row className="align-items-center">
-          {/* Text Left */}
-          <Col md={6}>
-            <h2 className="fw-bold mb-4" style={{ color: '#145214' }}>
-              Stay Informed with Guardian Angel Alerts
-            </h2>
-            <p className="fs-5 mb-4">
-              When you download the Guardian Angel add-on, you’ll receive messages and alerts
-              highlighting key areas of your trading behaviour. These help you improve discipline,
-              manage risk, and stay sharp in volatile conditions.
-            </p>
-            <ul className="list-unstyled fs-5">
-              <li className="mb-3"><FaExclamationTriangle className="text-success me-2" /> Excessive risk alerts</li>
-              <li className="mb-3"><FaShieldAlt className="text-success me-2" /> Stop loss suggestions</li>
-              <li className="mb-3"><FaTrophy className="text-success me-2" /> Performance insights (strong/weak trades)</li>
-              <li className="mb-3"><FaBell className="text-success me-2" /> Margin call warnings</li>
-              <li className="mb-3"><FaChartLine className="text-success me-2" /> Market updates relevant to your profile</li>
-              <li className="mb-3"><FaBalanceScale className="text-success me-2" /> Volatility tracking alerts</li>
-            </ul>
-          </Col>
-
-          {/* Image Right */}
-          <Col md={6} className="text-center mt-4 mt-md-0">
-            <img
-              src="/assets/guardian-angel-alerts.png"
-              alt="Guardian Angel Alerts"
-              className="img-fluid"
-              style={{
-                maxHeight: '400px',
-                borderRadius: '12px',
-                boxShadow: '0 0 10px rgba(0,0,0,0.1)',
-              }}
-            />
-          </Col>
-        </Row>
-      </Container>
-    </div>
-    <div style={{ backgroundColor: '#e6f4ea' }} className="text-dark py-5">
-      <Container>
-        <Row className="align-items-center">
-          {/* Text Left */}
-          <Col md={6}>
-            <h2 className="fw-bold mb-4" style={{ color: '#145214' }}>
-              Your Personal Trading Guardian
-            </h2>
-            <p className="fs-5 mb-4">
-              <FaUserCog className="text-success me-2" />
-              Guardian Angel is tailored to you. Every trader configures their own settings, preferences, and priorities.
-              That means the alerts and insights you receive are uniquely suited to your trading style and goals.
-            </p>
-            <p className="fs-5 mb-4">
-              <FaEye className="text-success me-2" />
-              Acting as a second pair of eyes, Guardian Angel provides objective, real-time feedback during your trades—
-              helping you stay on track without overwhelming you.
-            </p>
-            <p className="fs-5">
-              <FaUserShield className="text-success me-2" />
-              While you shouldn't rely on it entirely, it’s the perfect companion to guide and strengthen your decision-making.
-            </p>
-          </Col>
-
-          {/* Image Right */}
-          <Col md={6} className="text-center mt-4 mt-md-0">
-            <img
-              src="/assets/guardian-angel-custom.png"
-              alt="Custom Guardian Angel"
-              className="img-fluid"
-              style={{
-                maxHeight: '400px',
-                borderRadius: '12px',
-                boxShadow: '0 0 10px rgba(0,0,0,0.1)',
-              }}
-            />
-          </Col>
-        </Row>
-      </Container>
-    </div>
-    <div style={{ backgroundColor: '#f5fff9' }} className="text-dark py-5">
-  <Container>
-    <Row className="justify-content-center">
-      <Col lg={10}>
-       
-        <p className="fs-5 mb-4 text-center">
-          The Guardian Angel tool is invaluable for both new and experienced traders,
-          offering external and objective insights into their trades. This kind of
-          feedback not only improves current decision-making but also builds better
-          trading habits for the future—because learning from mistakes is vital to growth.
-        </p>
-        <p className="fs-5 text-center">
-          At AvaTrade, we view trading as an evolving process. Beginners should
-          constantly refine their skills, and even experienced traders always have room to improve.
-          Recognizing this potential, we offer Guardian Angel as a powerful companion on every trader’s journey—
-          delivering intelligent support at the highest level possible.
-        </p>
-      </Col>
-    </Row>
-  </Container>
-</div>
-<div style={{ backgroundColor: '#e6f4ea' }} className="text-dark py-5">
-  <Container>
-    <Row className="align-items-center">
-      {/* Left: Text Content */}
-      <Col md={6}>
-        <h2 className="fw-bold mb-4" style={{ color: '#145214' }}>
-          Guardian Angel Alert Highlights
-        </h2>
-        <p className="fs-5 mb-4">
-          When you download the Guardian Angel add-on, you’ll receive real-time feedback
-          designed to strengthen your trading approach. The alerts are customized and help you
-          stay informed about key risks and opportunities.
-        </p>
-        <ul className="list-unstyled fs-5">
-          <li className="mb-3">
-            <FaExclamationTriangle className="text-success me-2" />
-            Excessive risk alerts
-          </li>
-          <li className="mb-3">
-            <FaShieldAlt className="text-success me-2" />
-            Stop loss reminders and suggestions
-          </li>
-          <li className="mb-3">
-            <FaTrophy className="text-success me-2" />
-            Strong/weak trading performance insights
-          </li>
-          <li className="mb-3">
-            <FaBell className="text-success me-2" />
-            Margin call warnings
-          </li>
-          <li className="mb-3">
-            <FaChartLine className="text-success me-2" />
-            Market alerts tailored to your trading profile
-          </li>
-          <li className="mb-3">
-            <FaBalanceScale className="text-success me-2" />
-            Volatility tracking updates
-          </li>
-        </ul>
-      </Col>
-
-      {/* Right: Image or Illustration */}
-      <Col md={6} className="text-center mt-4 mt-md-0">
-        <img
-          src="/assets/guardian-alerts-graphic.png"
-          alt="Guardian Angel Alerts"
-          className="img-fluid"
-          style={{
-            maxHeight: '400px',
-            borderRadius: '12px',
-            boxShadow: '0 0 10px rgba(0,0,0,0.1)',
-          }}
-        />
-      </Col>
-    </Row>
-  </Container>
-</div>
-<div style={{ backgroundColor: '#f0fbf5' }} className="text-dark py-5">
-  <Container>
-    <Row className="justify-content-center">
-      <Col lg={10}>
-        <h2 className="fw-bold text-center mb-4" style={{ color: '#145214' }}>
-          Personalized Support for Every Trader
-        </h2>
-        <p className="fs-5 text-center mb-4">
-          Guardian Angel is unique to each trader—meaning it does not deliver the same feedback to all users.
-          Each trader configures their own Guardian Angel based on personal trading goals and preferences.
-        </p>
-        <p className="fs-5 text-center">
-          While it shouldn’t be relied on exclusively, the Guardian Angel tool acts as a second pair of eyes,
-          helping to guide your decisions with personalized insights. Let it accompany you on your trading journey—
-          tailored entirely to your needs.
-        </p>
-      </Col>
-    </Row>
-  </Container>
-</div>
-
-<div style={{ backgroundColor: '#014421' }} className="text-white py-5">
-      <Container>
-        <Row className="justify-content-center text-center">
-          <Col lg={10}>
-            <h2 className="fw-bold mb-4">
-              The Guardian Angel has got your back while you are trading!
-            </h2>
-            <p className="fs-5 mb-4">
-              Open your MetaTrader 4 account today and get access to the Guardian Angel add-on for free.
-            </p>
-            <p className="fs-5 mb-4">
-              Already have a MetaTrader 4 or MetaTrader 5 account on AvaTrade? Download the Guardian Angel tool for free
-              or contact your account manager.
-            </p>
-
-            <div className="d-flex flex-column flex-md-row justify-content-center gap-3 mt-4">
-              <Button variant="light" size="lg" className="fw-semibold text-dark px-4">
-                Download Guardian Angel
+      <div style={{ backgroundColor: '#ffffff' }} className="text-dark py-5">
+        <Container>
+          <Row className="align-items-center">
+            <Col md={6} className="mb-4 mb-md-0">
+              <h2 className="fw-bold mb-3" style={{ color: '#1a202c', fontSize: '1.75rem' }}>
+                Downloading and Installing MT5
+              </h2>
+              <p className="fs-5" style={{ color: '#4a5568' }}>
+                Start by downloading the MT5 platform from the PipzoMarkets website. For Mac users, follow these steps for a native experience without virtualization.
+              </p>
+              <ul className="list-unstyled fs-5">
+                <li className="mb-3"><FaDownload className="text-success me-2" /> Download the PipzoMarkets MT5 Terminal (.dmg) file.</li>
+                <li className="mb-3"><FaFileAlt className="text-success me-2" /> Open the .dmg file and drag the app to your Applications folder.</li>
+                <li className="mb-3"><FaMousePointer className="text-success me-2" /> Right-click the app and select “Open” to launch.</li>
+                <li className="mb-3"><FaSignInAlt className="text-success me-2" /> Log in with your PipzoMarkets account details.</li>
+                <li className="mb-3"><FaCogs className="text-success me-2" /> Customize settings like one-click trading under Tools Options.</li>
+              </ul>
+              <Button
+                style={{ backgroundColor: '#00c37a', borderColor: '#00c37a', fontWeight: 600 }}
+                size="lg"
+                className="mt-3"
+              >
+                Download MT5 for Mac
               </Button>
-              <Button variant="outline-light" size="lg" className="fw-semibold px-4">
-                Contact Account Manager
+            </Col>
+            <Col md={6} className="text-center">
+              <img
+                src="/assets/pipzomarkets-mt5-install.png"
+                alt="Install MetaTrader 5"
+                className="img-fluid"
+                style={{
+                  maxHeight: '400px',
+                  borderRadius: '0.75rem',
+                  boxShadow: '0 8px 24px rgba(0, 0, 0, 0.15)',
+                }}
+              />
+            </Col>
+          </Row>
+        </Container>
+      </div>
+
+      <div style={{ backgroundColor: '#f8fafc' }} className="text-dark py-5">
+        <Container>
+          <Row className="align-items-center">
+            <Col md={6} className="mb-4 mb-md-0 order-md-2">
+              <h2 className="fw-bold mb-3" style={{ color: '#1a202c', fontSize: '1.75rem' }}>
+                Setting Up Your Trading Account
+              </h2>
+              <p className="fs-5" style={{ color: '#4a5568' }}>
+                Once installed, log in to your PipzoMarkets account. Create a demo account for risk-free practice or fund a real account to start live trading.
+              </p>
+              <ul className="list-unstyled fs-5">
+                <li className="mb-3"><FaSignInAlt className="text-success me-2" /> Go to File Login to Trade Account.</li>
+                <li className="mb-3"><FaClipboardList className="text-success me-2" /> Enter your account number, password, and server (provided by PipzoMarkets).</li>
+                <li className="mb-3"><FaChartBar className="text-success me-2" /> Select assets from the Market Watch window.</li>
+                <li className="mb-3"><FaLock className="text-success me-2" /> Ensure secure connection with data encryption.</li>
+              </ul>
+              <Button
+                style={{ backgroundColor: '#00c37a', borderColor: '#00c37a', fontWeight: 600 }}
+                size="lg"
+                className="mt-3"
+              >
+                Create Account Now
               </Button>
-            </div>
-          </Col>
-        </Row>
-      </Container>
-    </div>
+            </Col>
+            <Col md={6} className="text-center order-md-1">
+              <img
+                src="/assets/pipzomarkets-mt5-account-setup.png"
+                alt="MT5 Account Setup"
+                className="img-fluid"
+                style={{
+                  maxHeight: '400px',
+                  borderRadius: '0.75rem',
+                  boxShadow: '0 8px 24px rgba(0, 0, 0, 0.15)',
+                }}
+              />
+            </Col>
+          </Row>
+        </Container>
+      </div>
 
-    <div style={{ backgroundColor: '#e6f4ea' }} className="text-dark py-5">
-      <Container>
-        <Row className="justify-content-center">
-          <Col lg={10}>
-            <h2 className="fw-bold mb-5 text-center" style={{ color: '#145214' }}>
-              <FaQuestionCircle className="me-2" />
-              Guardian Angel Main FAQs
-            </h2>
+      <div style={{ backgroundColor: '#ffffff' }} className="text-dark py-5">
+        <Container>
+          <Row className="align-items-center">
+            <Col md={6} className="mb-4 mb-md-0">
+              <h2 className="fw-bold mb-3" style={{ color: '#1a202c', fontSize: '1.75rem' }}>
+                Navigating the MT5 Interface
+              </h2>
+              <p className="fs-5" style={{ color: '#4a5568' }}>
+                Familiarize yourself with MT5's layout: Market Watch for quotes, Navigator for accounts and EAs, Toolbox for trades and history, and the main chart window.
+              </p>
+              <ul className="list-unstyled fs-5">
+                <li className="mb-3"><FaChartLine className="text-success me-2" /> Use 21 timeframes and 6 chart types for analysis.</li>
+                <li className="mb-3"><FaPuzzlePiece className="text-success me-2" /> Add indicators from the Insert menu (38 built-in).</li>
+                <li className="mb-3"><FaLayerGroup className="text-success me-2" /> Customize dashboards with unlimited charts.</li>
+                <li className="mb-3"><FaCalendarAlt className="text-success me-2" /> Access the Economic Calendar for market events.</li>
+              </ul>
+              <Button
+                style={{ backgroundColor: '#00c37a', borderColor: '#00c37a', fontWeight: 600 }}
+                size="lg"
+                className="mt-3"
+              >
+                Explore MT5 Features
+              </Button>
+            </Col>
+            <Col md={6} className="text-center">
+              <img
+                src="/assets/pipzomarkets-mt5-interface.png"
+                alt="MT5 Interface"
+                className="img-fluid"
+                style={{
+                  maxHeight: '400px',
+                  borderRadius: '0.75rem',
+                  boxShadow: '0 8px 24px rgba(0, 0, 0, 0.15)',
+                }}
+              />
+            </Col>
+          </Row>
+        </Container>
+      </div>
 
-            <Accordion defaultActiveKey="0" flush>
-              <Accordion.Item eventKey="0">
-                <Accordion.Header>Does Guardian Angel improve your trading results?</Accordion.Header>
-                <Accordion.Body>
-                  The Guardian Angel plug-in is a powerful MetaTrader add-on that provides valuable feedback on your trading behavior.
-                  It indicates market volatility and helps with stop-loss levels based on conditions. However, it is not investment advice.
-                  There is no proven evidence that Guardian Angel improves profits or reduces losses. Use it as a support tool, not a guarantee.
-                </Accordion.Body>
-              </Accordion.Item>
+      <div style={{ backgroundColor: '#f8fafc' }} className="text-dark py-5">
+        <Container>
+          <Row className="align-items-center">
+            <Col md={6} className="mb-4 mb-md-0 order-md-2">
+              <h2 className="fw-bold mb-3" style={{ color: '#1a202c', fontSize: '1.75rem' }}>
+                Placing and Managing Trades
+              </h2>
+              <p className="fs-5" style={{ color: '#4a5568' }}>
+                Execute trades easily with market, pending, or one-click orders. Set Stop Loss (SL) and Take Profit (TP) to manage risks.
+              </p>
+              <ul className="fs-6 list-unstyled">
+                <li className="mb-3"><FaBolt className="text-success me-2" /> Right-click in Market Watch New Order or press F9.</li>
+                <li className="mb-3"><FaChartPie className="text-success me-2" /> Choose volume, order type, and set SL/TP.</li>
+                <li className="mb-3"><FaClipboardCheck className="text-success me-2" /> Monitor positions in the Trade tab; modify or close as needed.</li>
+                <li className="mb-3"><FaWrench className="text-success me-2" /> Use trailing stops for dynamic risk management.</li>
+                <li className="mb-3"><FaRobot className="text-success me-2" /> Integrate EAs for automated trading via MQL5.</li>
+              </ul>
+              <Button
+                style={{ backgroundColor: '#00c37a', borderColor: '#00c37a', fontWeight: 600 }}
+                size="lg"
+                className="mt-3"
+              >
+                Start Placing Trades
+              </Button>
+            </Col>
+            <Col md={6} className="text-center order-md-1">
+              <img
+                src="/assets/pipzomarkets-mt5-placing-trades.png"
+                alt="Placing Trades on MT5"
+                className="img-fluid"
+                style={{
+                  maxHeight: '400px',
+                  borderRadius: '0.75rem',
+                  boxShadow: '0 8px 24px rgba(0, 0, 0, 0.15)',
+                }}
+              />
+            </Col>
+          </Row>
+        </Container>
+      </div>
 
-              <Accordion.Item eventKey="1">
-                <Accordion.Header>Is the Guardian Angel useful for advanced traders?</Accordion.Header>
-                <Accordion.Body>
-                  Yes. Guardian Angel provides feedback on risk management, trading performance, market statistics, and financial news.
-                  These insights are valuable for both beginners and experienced traders, helping to improve their decision-making over time.
-                </Accordion.Body>
-              </Accordion.Item>
+      <div style={{ backgroundColor: '#ffffff' }} className="text-dark py-5">
+        <Container>
+          <Row className="align-items-center">
+            <Col md={6} className="mb-4 mb-md-0">
+              <h2 className="fw-bold mb-4" style={{ color: '#1a202c', fontSize: '1.75rem' }}>
+                Advanced Trading Tools and Tips
+              </h2>
+              <p className="fs-5 mb-4" style={{ color: '#4a5568' }}>
+                Leverage MT5's advanced features for better decision-making. Use custom indicators, scripts, and the Depth of Market tool.
+              </p>
+              <ul className="fs-5 list-unstyled">
+                <li className="mb-3"><FaChartBar className="text-success me-2" /> Apply 44 analytical objects for technical analysis.</li>
+                <li className="mb-3"><FaRobot className="text-success me-2" /> Develop or download EAs from the MetaTrader Market.</li>
+                <li className="mb-3"><FaBolt className="text-success me-2" /> Enable one-click trading for faster execution.</li>
+                <li className="mb-3"><FaLock className="text-success me-2" /> Practice risk management: Start small, use demo accounts, and stay informed via webinars.</li>
+              </ul>
+              <p className="fs-5" style={{ color: '#4a5568' }}>
+                PipzoMarkets provides educational resources, including webinars and account managers, to enhance your MT5 trading skills.
+              </p>
+            </Col>
+            <Col md={6} className="text-center">
+              <img
+                src="/assets/pipzomarkets-mt5-advanced-tools.png"
+                alt="Advanced MT5 Tools"
+                className="img-fluid"
+                style={{
+                  maxHeight: '400px',
+                  borderRadius: '0.75rem',
+                  boxShadow: '0 8px 24px rgba(0, 0, 0, 0.15)',
+                }}
+              />
+            </Col>
+          </Row>
+        </Container>
+      </div>
 
-              <Accordion.Item eventKey="2">
-                <Accordion.Header>Does Guardian Angel provide the same feedback for all traders?</Accordion.Header>
-                <Accordion.Body>
-                  No. Guardian Angel is personalized. It analyzes each trader’s actions and offers unique feedback tailored to their style and needs.
-                  It can also be customized to only show specific insights. Think of it as a second pair of eyes to support—not replace—your judgment.
-                </Accordion.Body>
-              </Accordion.Item>
-            </Accordion>
-          </Col>
-        </Row>
-      </Container>
-    </div>
- 
-</>
+      <div style={{ backgroundColor: '#f8fafc' }} className="text-dark py-5">
+        <Container>
+          <Row className="align-items-center">
+            <Col md={6}>
+              <h2 className="fw-bold mb-4" style={{ color: '#1a202c', fontSize: '1.75rem' }}>
+                MT5 Trading FAQ
+              </h2>
+              <h5 className="fw-semibold mb-3" style={{ color: '#00c37a' }}>
+                How Do I Place a Trade on MT5?
+              </h5>
+              <p className="fs-6 mb-4" style={{ color: '#4a5568' }}>
+                Right-click on your chosen asset in Market Watch, select 'New Order', set parameters like volume and SL/TP, then click Buy or Sell.
+              </p>
+              <h5 className="fw-semibold mb-3" style={{ color: '#00c37a' }}>
+                Can I Use EAs on MT5?
+              </h5>
+              <p className="fs-6 mb-4" style={{ color: '#4a5568' }}>
+                Yes, MT5 supports Expert Advisors for automated trading. Install them via the Navigator and attach to charts.
+              </p>
+              <h5 className="fw-semibold mb-3" style={{ color: '#00c37a' }}>
+                Is MT5 Suitable for Beginners?
+              </h5>
+              <p className="fs-6 mb-4" style={{ color: '#4a5568' }}>
+                Absolutely, with its intuitive interface and demo accounts. Start with basic features and gradually explore advanced tools.
+              </p>
+              <Button
+                style={{ backgroundColor: '#00c37a', borderColor: '#00c37a', fontWeight: 600 }}
+                size="lg"
+                className="mt-4"
+              >
+                Get Started with MT5
+              </Button>
+            </Col>
+            <Col md={6} className="text-center mt-4 mt-md-0">
+              <img
+                src="/assets/pipzomarkets-mt5-faq.png"
+                alt="MT5 Trading FAQ"
+                className="img-fluid"
+                style={{
+                  maxHeight: '420px',
+                  borderRadius: '0.75rem',
+                  boxShadow: '0 8px 24px rgba(0, 0, 0, 0.15)',
+                }}
+              />
+            </Col>
+          </Row>
+        </Container>
+      </div>
+    </>
   );
 };
 
-export default TradeMT5;
+export default PipzoMarketsHowToTradeMT5;

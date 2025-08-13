@@ -43,7 +43,7 @@ const PIPZOSocialBanner: React.FC = () => {
           padding: '20px',
         }}
       >
-        <h1 className="fw-bold display-4 mb-3">Dupli Trade</h1>
+        <h1 className="fw-bold display-4 mb-3">PIPZO SOCIAL </h1>
         <p className="fs-4 text-warning mb-3">
           Unlock the Power of Trading Together
         </p>

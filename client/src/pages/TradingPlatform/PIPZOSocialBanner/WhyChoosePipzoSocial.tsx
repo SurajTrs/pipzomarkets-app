@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import {
@@ -13,12 +14,12 @@ const features = [
   {
     title: 'Trading Community',
     icon: <FaUsers size={32} color="#28a745" />,
-    description: 'Find, follow, join, or create your trading networks and grow your trusted community.',
+    description: 'Find, follow, join, or create your trading networks and grow your trusted community with PipzoMarkets.',
   },
   {
     title: 'Copy the Experts',
     icon: <FaUserTie size={32} color="#28a745" />,
-    description: 'Skip market research – access skilled traders with proven track records.',
+    description: 'Skip market research – access skilled traders with proven track records on PipzoMarkets.',
   },
   {
     title: 'Diversification Made Easy',
@@ -28,21 +29,21 @@ const features = [
   {
     title: 'Transparency and Control',
     icon: <FaEye size={32} color="#28a745" />,
-    description: "Monitor experts' performance, adjust your portfolio, and stop copying anytime.",
+    description: "Monitor experts' performance, adjust your portfolio, and stop copying anytime with PipzoMarkets.",
   },
   {
     title: 'Trade Anytime, Anywhere',
     icon: <FaGlobe size={32} color="#28a745" />,
-    description: 'Trade forex, indices, commodities, and shares 24/7 with the AvaSocial app.',
+    description: 'Trade forex, indices, commodities, and shares 24/7 with the PipzoMarkets app.',
   },
   {
     title: 'Trade with Confidence',
     icon: <FaShieldAlt size={32} color="#28a745" />,
-    description: 'Share your strategies and benefit as you connect with like-minded traders.',
+    description: 'Share your strategies and benefit as you connect with like-minded traders on PipzoMarkets.',
   },
 ];
 
-const WhyChooseAvaSocial: React.FC = () => {
+const WhyChoosePipzoMarkets: React.FC = () => {
   return (
     <div style={{ backgroundColor: '#e6f5ee', padding: '80px 0' }}>
       <Container>
@@ -50,7 +51,7 @@ const WhyChooseAvaSocial: React.FC = () => {
           className="text-center mb-5"
           style={{ fontWeight: 700, fontSize: '2.8rem', color: '#146c43' }}
         >
-          Why Choose <span style={{ color: '#28a745' }}>AvaSocial</span>?
+          Why Choose <span style={{ color: '#28a745' }}>PipzoMarkets</span>?
         </h2>
         <Row>
           {features.map((item, index) => (
@@ -81,4 +82,4 @@ const WhyChooseAvaSocial: React.FC = () => {
   );
 };
 
-export default WhyChooseAvaSocial;
+export default WhyChoosePipzoMarkets;
