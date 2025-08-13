@@ -33,7 +33,7 @@ const TrustSection: React.FC = () => {
           You're in <span style={{ color: '#00BFA6' }}>Safe Hands</span>
         </h2>
         <p className="lead text-center text-light mb-4">
-          AvaTrade is regulated in 9 jurisdictions worldwide,<br /> ensuring trust, compliance, and security.
+          PIPZOMARKETS is regulated in 9 jurisdictions worldwide,<br /> ensuring trust, compliance, and security.
         </p>
 
         <div className="text-center mb-5">

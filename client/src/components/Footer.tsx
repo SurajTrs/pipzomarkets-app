@@ -1,4 +1,3 @@
-
 import React from 'react';
 import '../style.css';
 // Import placeholder images (replace with actual images when added)
@@ -33,12 +32,78 @@ const Footer = () => {
   ];
 
   const socialPlatforms = [
-    { name: 'facebook', src: Facebook },
-    { name: 'youtube', src: YouTube },
-    { name: 'instagram', src: Instagram },
-    { name: 'twitter', src: Twitter },
-    { name: 'linkedin', src: LinkedIn },
-    { name: 'telegram', src: Telegram },
+    { name: 'facebook', src: Facebook, href: 'https://www.facebook.com/profile.php?id=61577357139254&sk=about' },
+    { name: 'youtube', src: YouTube, href: 'https://www.youtube.com/PipzoMarkets' },
+    { name: 'instagram', src: Instagram, href: 'https://www.instagram.com/pipzomarket' },
+    { name: 'twitter', src: Twitter, href: 'https://x.com/pipzomarket' },
+    { name: 'linkedin', src: LinkedIn, href: 'https://www.linkedin.com/company/PipzoMarkets' },
+    { name: 'telegram', src: Telegram, href: 'https://t.me/PipzoMarkets' },
+  ];
+
+  const footerSections = [
+    {
+      heading: 'Forex Trading',
+      items: [
+        { name: 'What is Forex', href: '/WhatIsForex' },
+        { name: 'How to Trade Forex', href: '/HowToTradeForex' },
+        { name: 'Vanilla Options', href: '/VanillaOptions' },
+      ],
+    },
+    {
+      heading: 'CFD Trading',
+      items: [
+        { name: 'What Are CFDs', href: '/WhatAreCFDs' },
+        { name: 'Bonds & Treasuries', href: '/BondsAndTreasuries' },
+        { name: 'ETFs Trading', href: '/ETFsTrading' },
+        { name: 'Commodities Trading', href: '/HowToTradeCommodities' },
+        { name: 'Indices Trading', href: '/IndicesTrading' },
+        { name: 'Stock Trading', href: '/WhatAreStocks' },
+        { name: 'eBook', href: '/EbookDownload' },
+      ],
+    },
+    {
+      heading: 'Trading Platforms',
+      items: [
+        { name: 'WebTrader', href: '/WebTrader' },
+        { name: 'PipzoMarkets App', href: '/PipzoTradeApp' },
+        { name: 'Options Platform', href: '/AvaOptions' },
+        { name: 'MetaTrader 4', href: '/MetaTrader' },
+        { name: 'MetaTrader 5', href: '/TradeMT5' },
+        { name: 'Automated Trading', href: '/Algorithmic' },
+        { name: 'Mac Trading', href: '/MacTrading' },
+        { name: 'Social Trading', href: '/platforms/PIPZOSocialBanner' },
+      ],
+    },
+    {
+      heading: 'Cryptocurrencies',
+      items: [
+        { name: 'What Are Cryptocurrencies', href: '/Cryptocurrencies'},
+        { name: 'How to Trade', href: '/HowCrypto' },
+        { name: 'Bitcoin, Litecoin, Ripple', href: '/BitCoinPage' },
+        { name: 'Ethereum, Stellar', href: '/EthereumPage' },
+        { name: 'Chainlink, Uniswap, MIOTA', href: '/ChainlinkPage' },
+      ],
+    },
+     {
+      heading: 'Education',
+      items: [
+        { name: 'Trading Videos', href: 'HowtoTradeOnline' },
+        { name: 'For Beginners', href: '/ForexTradingCoursesPage' },
+        { name: 'Market Terms', href: '/MarketTerms' },
+        { name: 'Order Types', href: '/OrderTypes' },
+        { name: 'Blog, Strategies', href: '/Blog' },
+      ],
+    },
+    {
+      heading: 'Company',
+      items: [
+        { name: 'About Us', href: '/about' },
+        { name: 'Contact Us', href: '/ContactUs' },
+        { name: 'Legal Documents', href: '/LegalDocuments' },
+        { name: 'Terms of Service', href: '/RegulationTrustPage' },
+      ],
+    },
+   
   ];
 
   return (
@@ -63,60 +128,20 @@ const Footer = () => {
 
         {/* Footer Grid */}
         <div className="row g-4 mb-5">
-          {[
-            {
-              heading: 'Forex Trading',
-              items: ['What is Forex', 'How to Trade Forex', 'Vanilla Options', 'Forex Pairs'],
-            },
-            {
-              heading: 'CFD Trading',
-              items: [
-                'What Are CFDs',
-                'Bonds & Treasuries',
-                'ETFs Trading',
-                'Commodities Trading',
-                'Indices Trading',
-                'Stock Trading',
-                'eBook',
-              ],
-            },
-            {
-              heading: 'Trading Platforms',
-              items: [
-                'WebTrader',
-                'PipzoMarkets App',
-                'Options Platform',
-                'MetaTrader 4',
-                'MetaTrader 5',
-                'Automated Trading',
-                'Mac Trading',
-                'Social Trading',
-              ],
-            },
-            {
-              heading: 'Cryptocurrencies',
-              items: [
-                'What Are Cryptocurrencies',
-                'How to Trade',
-                'Bitcoin, Litecoin, Ripple',
-                'Ethereum, Stellar',
-                'Chainlink, Uniswap, MIOTA',
-              ],
-            },
-            {
-              heading: 'Trading Info',
-              items: ['TradeProtect', 'Holiday Hours', 'Economic Calendar', 'Rollover, Calculator', 'Earnings Releases'],
-            },
-            {
-              heading: 'Education',
-              items: ['Trading Videos', 'For Beginners', 'Market Terms', 'Order Types', 'Blog, Strategies'],
-            },
-          ].map((section, index) => (
+          {footerSections.map((section, index) => (
             <div key={index} className="col-6 col-md-4 col-lg-2">
               <h6 className="text-success">{section.heading}</h6>
               <ul className="list-unstyled small text-light">
                 {section.items.map((item, i) => (
-                  <li key={i} className="mb-1">{item}</li>
+                  <li key={i} className="mb-1">
+                    <a
+                      href={item.href}
+                      className="text-light text-decoration-none hover:text-success"
+                      style={{ transition: 'color 0.2s' }}
+                    >
+                      {item.name}
+                    </a>
+                  </li>
                 ))}
               </ul>
             </div>
@@ -153,16 +178,36 @@ const Footer = () => {
             </form>
 
             <h6 className="text-success mb-3">Follow Us</h6>
-            <div className="d-flex flex-wrap gap-2 mb-4">
+            <div className="d-flex flex-wrap gap-3 mb-4">
               {socialPlatforms.map((platform, i) => (
-                <a key={i} href="#" className="opacity-75 hover-opacity">
-                  <img
-                    src={platform.src}
-                    alt={platform.name}
-                    height="18px"
-                    className="footer-icon"
-                    style={{ maxWidth: '25px' }}
-                  />
+                <a 
+                  key={i} 
+                  href={platform.href} 
+                  className="opacity-75 hover-opacity transition-transform duration-200 hover:scale-110"
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                >
+                  <div style={{ 
+                    width: '40px', 
+                    height: '40px', 
+                    display: 'flex', 
+                    alignItems: 'center', 
+                    justifyContent: 'center',
+                    overflow: 'hidden',
+                    backgroundColor: '#ffffff', // White background to normalize SVG rendering
+                    borderRadius: '4px' // Optional: slight rounding for consistency
+                  }}>
+                    <img
+                      src={platform.src}
+                      alt={platform.name}
+                      style={{ 
+                        width: '40px', 
+                        height: '40px', 
+                        objectFit: 'contain',
+                        padding: '2px' // Padding to ensure no clipping
+                      }}
+                    />
+                  </div>
                 </a>
               ))}
             </div>

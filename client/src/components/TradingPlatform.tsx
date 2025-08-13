@@ -98,7 +98,7 @@ const TradingPlatforms: React.FC = () => {
               image: '/assets/track.jpg',
             },
             {
-              title: 'AvaOptions',
+              title: 'PipzoOptions',
               desc: 'Balance risk and reward to match your market view.',
               image: '/assets/track.jpg',
             },
